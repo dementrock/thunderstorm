@@ -16,8 +16,9 @@ $(document).ready(function() {
   $(window).keydown(keyDown);
   $(document).click(clicked);
   $(document).mousemove(function(e) {
-    window.mouseXPos = e.pageX;
-    window.mouseYPos = e.pageY;
+      console.log(ctx.offsetLeft);
+      window.mouseXPos = e.pageX;// - document.offsetLeft;
+      window.mouseYPos = e.pageY;// - document.offsetTop;
 
   });
 });
@@ -69,8 +70,8 @@ function drawGun(ship) {
   var norm = Math.sqrt(dx * dx + dy * dy);
   dx = dx / norm * ship.radius;
   dy = dy / norm * ship.radius;
-  //    console.log('from ' + x + ', ' + y);
-  //    console.log('mouse ' + x2 + ', ' + y2);
+    //  console.log('from ' + x + ', ' + y);
+   //   console.log('mouse ' + x2 + ', ' + y2);
   //    console.log('to ' + (x+dx) + ', ' + (y+dy));
   ctx.beginPath();
   ctx.moveTo(x, y);
