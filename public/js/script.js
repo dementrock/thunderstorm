@@ -10,6 +10,8 @@ var image = new Image();
     //context.fillRect(0, 0, WIDTH, HEIGHT);
 //}
 
+var old_ships = null;
+var new_ships = null;
 var WIDTH = 1280;
 var HEIGHT = 700;
 var COOLDOWN = 400;
@@ -92,42 +94,43 @@ $(document).ready(function() {
 });
 
 var clicked = function(e) {
+/*
     time = new Date().getTime();
     if (!last_fired || time - last_fired >= COOLDOWN) {
         console.log('fire');
         last_fired = time;
         // console.log('fire! with ');
         // console.log(my_ship);
+*/
         var x = e.pageX;
         var y = e.pageY;
         //  console.log('to ' + x + ', ' + y);
         //console.log('fire');
         
         now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
-    }    
+ //   }    
 }
 
 function drawGun(ship) {
-  ctx.strokeStyle = '#F0F';
-  var oldWidth = ctx.lineWidth;
-  ctx.lineWidth = 4;
-  var x = ship.position[0];
-  var y = ship.position[1];
-  var x2 = window.mouseXPos;
-  var y2 = window.mouseYPos;
+    ctx.strokeStyle = '#F0F';
+    var oldWidth = ctx.lineWidth;
+    ctx.lineWidth = ship.bulletRadius * 2;
+    var x = ship.position[0];
+    var y = ship.position[1];
+    var x2 = window.mouseXPos;
+    var y2 = window.mouseYPos;
 
 
-  var dx = x2 - x, dy = y2 - y;
-  var norm = Math.sqrt(dx * dx + dy * dy);
-  dx = dx / norm * 2 * ship.radius;
-  dy = dy / norm * 2 * ship.radius;
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.lineTo(x + dx, y + dy);
-  ctx.closePath();
-  ctx.stroke();
-  ctx.lineWidth = oldWidth;
-
+    var dx = x2 - x, dy = y2 - y;
+    var norm = Math.sqrt(dx * dx + dy * dy);
+    dx = dx / norm * 2 * ship.radius;
+    dy = dy / norm * 2 * ship.radius;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.lineWidth = oldWidth;
 }
 
 function drawBG() {
@@ -140,11 +143,14 @@ function drawBG() {
 }
 
 function drawShip(ship, isSelf) {
-  if (isSelf) {
+  if (ship.blink) {
+      ctx.fillStyle = "#999";
+    }else if (isSelf) {
       ctx.fillStyle = "#0F0";
   } else {
       ctx.fillStyle = '#F00';
   }
+    
   ctx.beginPath();
   ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
   ctx.closePath();
@@ -169,18 +175,20 @@ now.OnConnect = function(id) {
   //alert(id);
 }
 
-now.OnRender = function(_ships, _bullets) {
-  var ships = JSON.parse(_ships);
-  var bullets = JSON.parse(_bullets);
+now.OnRender = function(ships, bullets) {
+  var found = false;
   drawBG();
   for(var shipIndex in ships) {
     var ship = ships[shipIndex];
     drawShip(ship, ship.id == shipId);
     if(ship.id == shipId) {
       my_ship = ship;
+        found = true;
     }
   }
-
+    if (!found) {
+        return;
+    }
   drawGun(my_ship);
 
   for(var bulletIndex in bullets) {
