@@ -8,53 +8,56 @@ var started = false;
 module.exports = function(app) {
   var game = new Game();
 
-  var ship_a = new Ship([50, 50], "player");
-  // var bullet_a = new Bullet([10, 0], 1, [10, 0]);
-  // var bullet_b = new Bullet([0, 10], 1, [0, -1]);
-  // var bullet_c = new Bullet([0, 0], 100, [1, 0]);
-  // var bullet_d = new Bullet([0, 100], 100, [0, -1]);
-  //
-  game.addShip(ship_a);
-  ship_a.isAlive = true;
-  // game.addBullet(bullet_a);
-  // game.addBullet(bullet_b);
-  // game.addBullet(bullet_c);
-  // game.addBullet(bullet_d);
 
   var everyone = nowjs.initialize(app);
   var clients = [];
+  
 
-  everyone.now.moveUp = function(ship) {
+  everyone.now.moveUp = function(id) {
     console.log('move up');
+      alert('up ' + id);
+    clients[id].setNewOrientation([0, -1]);
   };
-  everyone.now.moveDown = function(ship) {
+  everyone.now.moveDown = function(id) {
     console.log('move down');
+
+      alert('down ' + id);
+    clients[id].setNewOrientation([0, 1]);
   };
-  everyone.now.moveLeft = function(ship) {
+  everyone.now.moveLeft = function(id) {
     console.log('move left');
+
+      //alert('left ' + id);
+    clients[id].setNewOrientation([-1, 0]);
   };
-  everyone.now.moveRight = function(ship) {
+  everyone.now.moveRight = function(id) {
     console.log('move right');
+
+      alert('right ' + id);
+    clients[id].setNewOrientation([1, 0]);
   };
-  everyone.now.fire = function(shipGUID, orientation) {
-    game.fire(game.getShip(shipGUID), orientation);
+  everyone.now.fire = function(id, orientation) {
+    game.fire(clients[id], orientation);
   }
   /** Game loop */
   var count = 0;
   var onFrameUpdate = function(timeElapsed) {
   };
   var onStepUpdate = function(timeElapsed) {
-    everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
+    game.update(timeElapsed);
+    if(started) {
+      everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
+    }
   };
   var onRender = function() {
   };
 
   nowjs.on('connect', function() {
-    started = true;
-      
+      started = true;
       var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
       game.addShip(ship);
       clients[this.user.clientId] = ship;
+      this.now.OnConnect(this.user.clientId);//JSON.stringify(ship));//this.user.clientId);
   });
 
   nowjs.on('disconnect', function() {

@@ -1,5 +1,7 @@
 var ctx;
 var my_ship;
+var shipId;
+
 now.ready(function() {
 })
 
@@ -13,16 +15,26 @@ $(document).ready(function() {
   $(window).keydown(keyDown);
 });
 var keyDown = function(key) {
-  if(key == 38 || key == 87) {//up
-    now.moveUp({});
-  } else if(key == 40 || key == 83) {//down
-    now.moveDown({});
-  } else if(key == 37 || key == 65) {//left
-    now.moveLeft({});
-  } else if(key == 39 || key == 68) {//right
-    now.moveRight({});
-  }
+    //alert("?");
+    var code = key.keyCode;
+    if (code == 38 || code == 87) { //up
+        now.moveUp(shipId);
+
+    }
+    if (code == 40 || code == 83) { //down
+        now.moveDown(shipId);
+
+    }
+    if (code == 37 || code == 65) { //left
+        now.moveLeft(shipId);
+        console.log("client left");
+
+    }
+    if (code == 39 || code == 68) { //right
+        now.moveRight(shipId);
+    }
 }
+
 function drawBG() {
   ctx.fillStyle = '#777';
   //black
@@ -48,6 +60,12 @@ function drawBullet(bullet) {
   ctx.closePath();
   ctx.fill();
 
+}
+
+now.OnConnect = function (id) {
+    //my_ship = JSON.parse(_ship);
+    shipId = id;
+    //alert(id);
 }
 
 now.OnRender = function(_ships, _bullets) {

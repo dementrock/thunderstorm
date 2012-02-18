@@ -1,6 +1,6 @@
 var Common = require('./common');
 
-function Ship(position, player) {
+function Ship(position, player, id) {
   this.speed = 0;
   this.orientation = [0, 0];
   this.position = position;
@@ -12,6 +12,7 @@ function Ship(position, player) {
   this.radius = 10;
   this.coolDown = 0;
   this.defaultCoolDown = 1;
+  this.id = id;
 }
 
 Ship.prototype = {
