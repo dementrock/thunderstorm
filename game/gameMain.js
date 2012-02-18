@@ -55,12 +55,13 @@ module.exports = function(app) {
               damaged = ships[i].damagedTurns % 2;
           }
           locs.push({
-              position     : ships[i].position,
-              radius       : ships[i].radius,
-              id           : ships[i].id,
-              hp           : ships[i].hp,
-              blink        : damaged,
-              bulletRadius : ships[i].bulletRadius,
+              position        : ships[i].position,
+              radius          : ships[i].radius,
+              id              : ships[i].id,
+              hp              : ships[i].hp,
+              fullHp          : ships[i].fullHp,
+              blink           : damaged,
+              bulletRadius    : ships[i].bulletRadius,
               fireOrientation : ships[i].fireOrientation,
           });
       }
