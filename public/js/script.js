@@ -12,41 +12,6 @@ var image = new Image();
 
 var old_ships = null;
 var new_ships = null;
-
-// var gameLoop = function(onFrameUpdate, onStepUpdate, onRender) {
-  // var FPS = 30;
-  // // physics step
-  // var PS = 1 / FPS;
-  // var last = Date.now() / 1000;
-  // var accrued = 0.0;
-  // var isRunning = false;
-// 
-  // var gameLoop = function() {
-    // if (!isRunning) {
-      // isRunning = true;
-    // } else {
-      // return;
-    // }
-    // var now = Date.now() / 1000;
-    // var dt = now - last;
-    // last = now;
-    // accrued += dt;
-    // while(accrued >= PS) {
-      // render(PS);
-      // accrued -= PS;
-    // }
-    // isRunning = false;
-  // }
-  // setInterval(gameLoop, 16);
-// }
-// 
-// var render = function(timeElapsed) {
-  // for (var i in new_ships) {
-//     
-  // }
-// }
-
-
 var WIDTH = 1280;
 var HEIGHT = 700;
 var COOLDOWN = 400;
@@ -209,10 +174,8 @@ now.OnConnect = function(id) {
   //alert(id);
 }
 
-now.OnRender = function(_ships, _bullets) {
+now.OnRender = function(ships, bullets) {
   var found = false;
-  var ships = JSON.parse(_ships);
-  var bullets = JSON.parse(_bullets);
   drawBG();
   for(var shipIndex in ships) {
     var ship = ships[shipIndex];

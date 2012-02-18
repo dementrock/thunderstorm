@@ -22,5 +22,5 @@ module.exports = function(onFrameUpdate, onStepUpdate, onRender) {
     }
     isRunning = false;
   }
-  setInterval(gameLoop, 3);
+  setInterval(gameLoop, 5);
 }
