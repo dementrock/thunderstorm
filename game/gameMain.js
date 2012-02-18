@@ -56,6 +56,7 @@ module.exports = function(app) {
               hp       : ships[i].hp,
               blink: damaged,
               bulletRadius : ships[i].bulletRadius,
+
           });
       }
     }
