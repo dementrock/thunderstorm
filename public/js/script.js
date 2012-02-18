@@ -1,5 +1,7 @@
 var ctx;
 var my_ship;
+var shipId;
+
 now.ready(function() {
 })
 
@@ -48,6 +50,10 @@ function drawBullet(bullet) {
   ctx.closePath();
   ctx.fill();
 
+}
+
+now.OnConnect = function (id) {
+  shipId = id;
 }
 
 now.OnRender = function(_ships, _bullets) {

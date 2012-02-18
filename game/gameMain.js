@@ -26,19 +26,19 @@ module.exports = function(app) {
 
   everyone.now.moveUp = function(ship) {
     console.log('move up');
-      ship.setNewOrientation([0,-1]);
+    ship.setNewOrientation([0, -1]);
   };
   everyone.now.moveDown = function(ship) {
     console.log('move down');
-      ship.setNewOrientation([0,1]);
+    ship.setNewOrientation([0, 1]);
   };
   everyone.now.moveLeft = function(ship) {
     console.log('move left');
-      ship.setNewOrientation([-1,0]);
+    ship.setNewOrientation([-1, 0]);
   };
   everyone.now.moveRight = function(ship) {
     console.log('move right');
-      ship.setNewOrientation([1,0]);
+    ship.setNewOrientation([1, 0]);
   };
   everyone.now.fire = function(shipGUID, orientation) {
     game.fire(game.getShip(shipGUID), orientation);
@@ -48,19 +48,19 @@ module.exports = function(app) {
   var onFrameUpdate = function(timeElapsed) {
   };
   var onStepUpdate = function(timeElapsed) {
-      if (started) {
-          everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
-      }
+    if(started) {
+      everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
+    }
   };
   var onRender = function() {
   };
 
   nowjs.on('connect', function() {
     started = true;
-    
-      var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
-      game.addShip(ship);
-      clients[this.user.clientId] = ship;
+    var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
+    game.addShip(ship);
+    clients[this.user.clientId] = ship;
+    this.now.OnConnect(this.user.clientId);
   });
 
   nowjs.on('disconnect', function() {
