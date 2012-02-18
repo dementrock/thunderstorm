@@ -8,8 +8,9 @@ var started = false;
 module.exports = function(app) {
   var game = new Game();
 
-  var everyone = nowjs.initialize(app);
-  var clients = [];
+    var everyone = nowjs.initialize(app);
+    var clients = [];
+    //var clients_guns = {};
 
   everyone.now.moveUp = function(id) {
     clients[id].setNewOrientation([0, -1]);
@@ -25,7 +26,8 @@ module.exports = function(app) {
   };
   everyone.now.fire = function(id, orientation) {
       //console.log('shoot! with ' + orientation);
-    game.fire(clients[id], orientation);
+      game.fire(clients[id], orientation);
+      clients[id].fireOrientation = orientation;
   }
   /** Game loop */
   var count = 0;
@@ -35,7 +37,7 @@ module.exports = function(app) {
     //console.log(count++, timeElapsed);
     game.update(timeElapsed);
     if(started) {
-      everyone.now.OnRender(JSON.stringify(compactShips(game.ships)), JSON.stringify(game.bullets));
+        everyone.now.OnRender(JSON.stringify(compactShips(game.ships)), JSON.stringify(game.bullets));
     }
   };
   var onRender = function() {
@@ -56,7 +58,7 @@ module.exports = function(app) {
               hp       : ships[i].hp,
               blink: damaged,
               bulletRadius : ships[i].bulletRadius,
-
+              fireOrientation : ships[i].fireOrientation,
           });
       }
     }

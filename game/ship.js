@@ -29,6 +29,7 @@ function Ship(position, player, id) {
     this.isAlive = true;
     this.coolDown = 0;
     this.id = id;
+    this.fireOrientation = null;
 
     var type = typeList[Math.floor ( Math.random() * typeList.length )];
 
@@ -62,7 +63,7 @@ Ship.prototype = {
     var newx = px + ox * this.speed * timeElapsed, newy = py + oy * this.speed * timeElapsed;
     newx = Math.max(newx, this.radius);
     newx = Math.min(newx, WIDTH - this.radius);
-    newy = Math.max(newy, this.radius);
+    newy = Math.max(newy, this.radius + 50);
     newy = Math.min(newy, HEIGHT - this.radius);
     this.position = [newx, newy];
     this.coolDown = Math.max(this.coolDown - timeElapsed, 0);

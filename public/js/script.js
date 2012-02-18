@@ -83,6 +83,7 @@ $(document).ready(function() {
   },100);
   
   $(document).click(clicked);
+
   $(document).mousemove(function(e) {
     window.mouseXPos = e.pageX;
     window.mouseYPos = e.pageY;
@@ -108,7 +109,9 @@ var clicked = function(e) {
  //   }    
 }
 
-function drawGun(ship) {
+function drawMyGun() {
+    var ship = my_ship;
+    //console.log('drawing my gun ' + ship);
     ctx.strokeStyle = '#F0F';
     var oldWidth = ctx.lineWidth;
     ctx.lineWidth = ship.bulletRadius * 2;
@@ -116,12 +119,33 @@ function drawGun(ship) {
     var y = ship.position[1];
     var x2 = window.mouseXPos;
     var y2 = window.mouseYPos;
-
+//    console.log(x + " " + y + " " + x2 + " " + y2);
 
     var dx = x2 - x, dy = y2 - y;
     var norm = Math.sqrt(dx * dx + dy * dy);
     dx = dx / norm * 2 * ship.radius;
     dy = dy / norm * 2 * ship.radius;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.lineWidth = oldWidth;
+}
+
+function drawGun(x, y, vector, size, width) {
+    ctx.strokeStyle = '#F0F';
+    var oldWidth = ctx.lineWidth;
+    ctx.lineWidth = width;
+   // var x = ship.position[0];
+    //var y = ship.position[1];
+    //var x2 = window.mouseXPos;
+    //var y2 = window.mouseYPos;
+
+    var dx = vector[0], dy = vector[1];//x2 - x, dy = y2 - y;
+    var norm = Math.sqrt(dx * dx + dy * dy);
+    dx = dx / norm * size;
+    dy = dy / norm * size;
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(x + dx, y + dy);
@@ -174,21 +198,34 @@ now.OnConnect = function(id) {
 
 now.OnRender = function(_ships, _bullets) {
     var found = false;
-  var ships = JSON.parse(_ships);
-  var bullets = JSON.parse(_bullets);
-  drawBG();
-  for(var shipIndex in ships) {
-    var ship = ships[shipIndex];
-    drawShip(ship, ship.id == shipId);
-    if(ship.id == shipId) {
-      my_ship = ship;
-        found = true;
+    var ships = JSON.parse(_ships);
+    var bullets = JSON.parse(_bullets);
+    drawBG();
+    for(var shipIndex in ships) {
+        var ship = ships[shipIndex];
+        drawShip(ship, ship.id == shipId);
+        if(ship.id == shipId) {
+            my_ship = ship;
+            found = true;
+        }
     }
-  }
     if (!found) {
         return;
     }
-  drawGun(my_ship);
+
+    drawMyGun();
+    for (var shipIndex in ships) {
+        var ship = ships[shipIndex];
+        if (ship.id == shipId) {
+            //console.log('myself!');
+            continue;
+        }
+        //console.log(ship.fireOrientation);
+        if (ship.fireOrientation != null ) {
+            drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
+        }
+    }
+
 
   for(var bulletIndex in bullets) {
     var bullet = bullets[bulletIndex];
