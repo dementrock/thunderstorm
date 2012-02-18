@@ -75,6 +75,23 @@ app.configure('production', function() {
 /** Load all the routes. */
 require('./routes')(app);
 
+/** Game loop */
+var count = 0;
+
+var onFrameUpdate = function (timeElapsed) {
+  //console.log(count++, ':', timeElapsed)
+};
+
+var onStepUpdate = function (timeElapsed) {
+  console.log(count++, ':', timeElapsed)
+};
+
+var onRender = function() {
+  
+};
+
+require('./gameloop')(onFrameUpdate, onStepUpdate, onRender);
+
 /** Start listenning. */
 app.listen(config.port);
 util.log(util.format('ENV: %s, listening on http://%s:%s', config.env, app.address().address, app.address().port));
