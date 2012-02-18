@@ -148,7 +148,7 @@ function drawShip(ship, isSelf) {
   ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
   ctx.closePath();
   ctx.fill();
-  for (var start_y = ship.position[1] - ship.radius * 2, restHp = ship.hp, nowHp = Math.min(100, restHp); restHp > 0; start_y += 10, restHp -= 100, nowHp = Math.min(100, restHp)) { 
+  for (var start_y = ship.position[1] - ship.radius - 10, restHp = ship.hp, nowHp = Math.min(100, restHp); restHp > 0; start_y -= 10, restHp -= 100, nowHp = Math.min(100, restHp)) { 
     ctx.fillRect(ship.position[0] - ship.radius, start_y, 2.0 * ship.radius * nowHp / 100, 5);
   }
 }
