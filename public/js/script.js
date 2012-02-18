@@ -108,7 +108,7 @@ var clicked = function(e) {
 function drawMyGun() {
     var ship = my_ship;
     //console.log('drawing my gun ' + ship);
-    ctx.strokeStyle = '#F0F';
+    ctx.strokeStyle = '#CC9900';
     var oldWidth = ctx.lineWidth;
     ctx.lineWidth = ship.bulletRadius * 2;
     var x = ship.position[0];
@@ -189,7 +189,7 @@ function drawShip(ship, isSelf) {
     }else if (isSelf) {
       ctx.fillStyle = "#0F0";
   } else {
-      ctx.fillStyle = '#F00';
+      ctx.fillStyle = '#990000';
   }
     
   ctx.beginPath();
@@ -212,6 +212,7 @@ function drawBullet(bullet) {
 
    
 function drawExplosion(explosion){
+    console.log("drawing explosion");
     ctx.fillStyle = '#FF0000';
     ctx.beginPath();
     ctx.arc(explosion.position[0], explosion.position[1], explosion.radius, 0, Math.PI * 2, true);
@@ -300,6 +301,7 @@ now.OnRender = function(ships, bullets, explosions, powerups) {
         for(var exploIndex in explosions) {
              drawExplosion(explosions[exploIndex]);
         }
+
         for(var bulletIndex in bullets) {
             var bullet = bullets[bulletIndex];
             if(bullet.isAlive) {
