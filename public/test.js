@@ -8,7 +8,13 @@ $(document).ready(function(){
     document.body.appendChild(canvas);
 
   $(window).keydown(keyDown);
-   $(document).click(clicked); 
+   $(document).click(clicked)
+   $(document).mousemove(function(e){
+      window.mouseXPos = e.pageX;
+      window.mouseYPos = e.pageY;
+
+   }); 
+; 
 
 });
 
@@ -46,12 +52,15 @@ function drawGun(ship) {
     ctx.fillStyle = '#FFF'; //white
     var x = ship.position[0];
     var y = ship.position[1];
-
+    var x2 = window.mouseXPos;
+    var y2 = window.mouseYPos;
+    //alert(x2 + " " + y2);
     
-    
-    ctx.moveTo(ship.position[0], ship.position[1]);
-    ctx.lineTo(ship.position, 50);
-    context.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x2, y2);
+    ctx.closePath();
+    ctx.stroke();
     
 }
 
@@ -114,6 +123,7 @@ function loop() {
             drawShip(ship);
         }
     }
+    drawGun(my_ship);
 
     for (var bulletIndex in game.bullets) {
         var bullet = game.bullets[bulletIndex];
