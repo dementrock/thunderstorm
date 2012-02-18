@@ -1,7 +1,7 @@
 var Common = require('./common');
 
 function Bullet(position, speed, orientation) {
-  this.speed = speed;
+  this.speed = 200;
   this.orientation = Common.normalize(orientation);
   this.position = position;
   this.isAlive = true;
