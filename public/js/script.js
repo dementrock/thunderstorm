@@ -30,13 +30,15 @@ now.ready(function() {
 var keys = [false, false, false, false, false];
 
 $(document).ready(function() {
-    $("body").css("background-color", "#3366ff");
-    var canvas = document.createElement("canvas");
-    ctx = canvas.getContext("2d");
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
-    document.body.appendChild(canvas);
-
+  window.mouseXPos = 1;
+  window.mouseYPos = 1;
+  
+  $("body").css("background-color", "#3366ff");
+  var canvas = document.createElement("canvas");
+  ctx = canvas.getContext("2d");
+  canvas.width = WIDTH;
+  canvas.height = HEIGHT;
+  document.body.appendChild(canvas);
 
 
   $(window).keydown(function(key) {
@@ -258,17 +260,21 @@ function drawShip(ship, isSelf) {
     if (ship.blink) {
         ctx.fillStyle = "#999";
     }else if (isSelf) {
-        ctx.fillStyle = "#0F0";
-    } else {
-        ctx.fillStyle = '#990000';
-    }
+      ctx.fillStyle = "#0F0";
+  } else {
+      ctx.fillStyle = '#990000';
+  }
+    
+  ctx.font = "20pt Calibri";
+  ctx.width = 40;
+  ctx.fillText(ship.name || "Unknown", ship.position[0] - ship.radius, ship.position[1] + ship.radius*2.5 );
 
-    ctx.beginPath();
-    ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.fill();
+  ctx.beginPath();
+  ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
+  ctx.closePath();
+  ctx.fill();
 
-    ctx.fillRect(ship.position[0] - ship.radius, ship.position[1] - ship.radius - 10, 2.0 * ship.radius * ship.hp / ship.fullHp, 5);
+  ctx.fillRect(ship.position[0] - ship.radius, ship.position[1] - ship.radius - 10, 2.0 * ship.radius * ship.hp / ship.fullHp, 5);
 }
 
 function drawBullet(bullet) {
@@ -298,6 +304,7 @@ function drawExplosion(explosion){
 now.OnConnect = function(id) {
     shipId = id;
 
+    now.nameIs(id, prompt("Who are you?"));
 };
 
 
@@ -339,9 +346,10 @@ now.OnRender = function(ships, bullets, explosions, powerups) {
         if (ship.id == shipId) {
             continue;
         }
-        if (ship.fireOrientation != null ) {
-            drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
+        if (ship.fireOrientation == null) {
+          ship.fireOrientation = [1, 1];
         }
+        drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
     }
 
 
