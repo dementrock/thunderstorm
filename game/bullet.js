@@ -2,7 +2,7 @@ var common = require('./common');
 
 function Bullet(position, speed, orientation) {
     this.speed = speed;
-    this.orientation = orientation;
+    this.orientation = common.normalize(orientation);
     this.position = position;
 }
 
@@ -16,7 +16,7 @@ Bullet.prototype = {
     function(timeElapsed) {
         var px = this.position[0], py = this.position[1];
         var ox = this.orientation[0], oy = this.orientation[1];
-        this.position = [px + ox * this.speed, py + oy * this.speed];
+        this.position = [px + ox * this.speed * timeElapsed, py + oy * this.speed * timeElapsed];
     },
 
     

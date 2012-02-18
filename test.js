@@ -44,11 +44,11 @@ function testBullet() {
 
     bullet_a.update(timeInterval);
 
-    assert(isSame(bullet_a.getPosition(), [5, 0]));
+    assert(isSame(bullet_a.getPosition(), [50, 0]));
 
     bullet_a.update(timeInterval);
 
-    assert(isSame(bullet_a.getPosition(), [10, 0]));
+    assert(isSame(bullet_a.getPosition(), [100, 0]));
 
     bullet_a.destroy();
 
@@ -60,10 +60,10 @@ function testGame() {
     var game_a = new game();
 
     var ship_a = new ship([0, 0], player);
-    var bullet_a = new bullet([10, 0]);
-    var bullet_b = new bullet([0, 10]);
-    var bullet_c = new bullet([0, 0]);
-    var bullet_d = new bullet([0, 100]);
+    var bullet_a = new bullet([10, 0], 1, [10, 0]);
+    var bullet_b = new bullet([0, 10], 1, [0, -1]);
+    var bullet_c = new bullet([0, 0], 100, [1, 0]);
+    var bullet_d = new bullet([0, 100], 100, [0, -1]);
 
     game_a.addShip(ship_a);
     game_a.addBullet(bullet_a);
@@ -75,6 +75,17 @@ function testGame() {
     assert(game_a.isIntersect(ship_a, bullet_b));
     assert(game_a.isIntersect(ship_a, bullet_c));
     assert(!game_a.isIntersect(ship_a, bullet_d));
+
+    game_a.update(1);
+
+    assert(common.isSame(game_a.ships[0].getPosition(), [0, 0]));
+    assert(common.isSame(game_a.bullets[0].getPosition(), [11, 0]));
+    assert(common.isSame(game_a.bullets[1].getPosition(), [0, 9]));
+    assert(common.isSame(game_a.bullets[2].getPosition(), [0, 9]));
+    console.log(game_a.ships[0].getPosition());
+    console.log(game_a.bullets[0].getPosition());
+
+    
 
 }
 

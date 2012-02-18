@@ -13,26 +13,34 @@ Ship.prototype = {
     hp: 100,
     isAlive: true,
     radius: 10,
+    newOrientation: undefined,
     //bulletType: normalBullet,
     gunOrientation: [0, 1],
     player: null,
 
+    setNewOrientation:
+    function(newOrientation) {
+        this.newOrientation = newOrientation;
+    },
+
     update:
     function(timeElapsed) {
+        this.turn(timeElapsed);
         var px = this.position[0], py = this.position[1];
         var ox = this.orientation[0], oy = this.orientation[1];
         this.position = [px + ox * this.speed, py + oy * this.speed];
     },
 
     turn: 
-    function(timeElapsed, newOrientation) {
-        if (newOrientation === undefined || common.isSameOrientation(this.orientation, newOrientation)) {
+    function(timeElapsed) {
+        if (this.newOrientation === undefined || common.isSameOrientation(this.orientation, this.newOrientation)) {
             // increase speed
             this.speed = Math.min(this.speed + timeElapsed, this.maxSpeed);
         } else {
             this.orientation = common.normalize(newOrientation);
             this.speed = 0;
         }
+        this.newOrientation = undefined;
     },
 
     damage:

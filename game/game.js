@@ -7,10 +7,7 @@ function Game() {
 
 Game.prototype = {
     update:
-    function(timeElasped) {
-        // update direction of ships?
-        // TODO
-
+    function(timeElapsed) {
         // update all ships
         for (var shipIndex in this.ships) {
             var ship = this.ships[shipIndex];
@@ -22,7 +19,7 @@ Game.prototype = {
         for (var bulletIndex in this.bullets) {
             var bullet = this.bullets[bulletIndex];
             if (bullet.isAlive) {
-                bullet.update(timeElasped);
+                bullet.update(timeElapsed);
             }
         }
         // test for intersection
