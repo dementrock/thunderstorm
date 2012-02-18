@@ -27,6 +27,7 @@ var clicked = function(e) {
     console.log(my_ship);
     var x = e.pageX;
     var y = e.pageY;
+    console.log('to ' + x + ', ' + y);
     now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
 }
   
