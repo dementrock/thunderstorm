@@ -1,12 +1,14 @@
 var Common = require('./common');
 var Ship = require('./ship');
 var Bullet = require('./bullet');
+var Powerup = require('./powerup');
 WIDTH = 1280;
 HEIGHT = 700;
 
 function Game() {
   this.ships = new Array();
   this.bullets = new Array();
+  this.powerups = new Array();
 }
 
 Game.prototype = {
@@ -40,6 +42,11 @@ Game.prototype = {
           if(ship.isAlive) {
             if(this.isIntersect(ship, bullet)) {
               ship.damage(bullet.damageValue);
+              if (!ship.isAlive) {
+                console.log('dead');
+                this.addPowerup(new Powerup(ship.position));
+                console.log(this.powerups);
+              }
               isHit = true;
             }
           }
@@ -84,7 +91,25 @@ Game.prototype = {
         }
       }
     }
-
+    // test for intersection between ships and powerups 
+    for(var powerupIndex in this.powerups) {
+      var powerup = this.powerups[powerupIndex];
+      if (powerup.isAlive) {
+        for (var shipIndex in this.ships) {
+          var ship = this.ships[shipIndex];
+          if (ship.isAlive) {
+            if (this.isIntersect(powerup, ship)) {
+              ship.restoreHp();
+              powerup.isAlive = false;
+              break;
+            }
+          }
+        }
+      }
+      if (!powerup.isAlive) {
+        this.removePowerup(powerup);
+      }
+    }
   },
   isIntersect: function(obj1, obj2) {
     return Common.distance(obj1.getPosition(), obj2.getPosition()) <= obj1.getRadius() + obj2.getRadius();
@@ -95,6 +120,9 @@ Game.prototype = {
   addBullet: function(newBullet) {
     this.bullets.push(newBullet);
   },
+  addPowerup: function(newPowerup) {
+    this.powerups.push(newPowerup);
+  },
   removeShip: function(ship) {
     var idx = this.ships.indexOf(ship);
     if(idx != -1)
@@ -104,6 +132,11 @@ Game.prototype = {
     var idx = this.bullets.indexOf(bullet);
     if(idx != -1)
       this.bullets.splice(idx, 1);
+  },
+  removePowerup: function(powerup) {
+    var idx = this.powerups.indexOf(powerup);
+    if(idx != -1)
+      this.powerups.splice(idx, 1);
   },
   fire: function(ship, gunOrientation) {
     if(Common.isEqual(ship.getCoolDown(), 0)) {

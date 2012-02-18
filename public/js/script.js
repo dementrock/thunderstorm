@@ -173,6 +173,15 @@ function drawBullet(bullet) {
 
 }
 
+function drawPowerup(powerup) {
+    ctx.fillStyle = '#FC0';
+    ctx.beginPath();
+    console.log(powerup.position);
+    ctx.arc(powerup.position[0], powerup.position[1], powerup.radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fill();
+}
+
 now.OnConnect = function(id) {
   shipId = id;
 };
@@ -191,7 +200,7 @@ drawText = function(str) {
 var TIMES = 25;
 var TIME = 40;
 
-now.OnRender = function(ships, bullets) {
+now.OnRender = function(ships, bullets, powerups) {
     //console.log("rendering");
     if (ininterp) {
         clearTimeout(ininterp);
@@ -239,6 +248,12 @@ now.OnRender = function(ships, bullets) {
             var bullet = bullets[bulletIndex];
             if(bullet.isAlive) {
                 drawBullet(bullet);
+            }
+        }
+        for (var powerupIndex in powerups) {
+            var powerup = powerups[powerupIndex];
+            if (powerup.isAlive) {
+                drawPowerup(powerup);
             }
         }
         if (my_ship.hp <= 0) {

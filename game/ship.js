@@ -66,6 +66,7 @@ function Ship(position, player, id) {
 
     this.maxSpeed = type.maxSpeed;
     this.hp = type.hp;
+    this.fullHp = type.hp;
     this.radius = type.radius;
     this.defaultCoolDown = type.defaultCoolDown;
     this.bulletRadius = type.bulletRadius;
@@ -143,6 +144,9 @@ Ship.prototype = {
   },
   getRadius: function() {
     return this.radius;
+  },
+  restoreHp: function() {
+    this.hp = this.fullHp;
   },
 };
 

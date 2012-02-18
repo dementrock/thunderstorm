@@ -35,7 +35,7 @@ module.exports = function(app) {
     //console.log(count++, timeElapsed);
     game.update(timeElapsed);
     if(started) {
-      everyone.now.OnRender(compactShips(game.ships), game.bullets);
+      everyone.now.OnRender(compactShips(game.ships), game.bullets, game.powerups);
     }
   };
   var onRender = function() {
@@ -50,13 +50,12 @@ module.exports = function(app) {
               damaged = ships[i].damagedTurns % 2;
           }
           locs.push({
-              position : ships[i].position,
-              radius   : ships[i].radius,
-              id       : ships[i].id,
-              hp       : ships[i].hp,
-              blink: damaged,
+              position     : ships[i].position,
+              radius       : ships[i].radius,
+              id           : ships[i].id,
+              hp           : ships[i].hp,
+              blink        : damaged,
               bulletRadius : ships[i].bulletRadius,
-
           });
       }
     }
