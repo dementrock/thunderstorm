@@ -8,19 +8,6 @@ var started = false;
 module.exports = function(app) {
   var game = new Game();
 
-  var ship_a = new Ship([50, 50], "player");
-  // var bullet_a = new Bullet([10, 0], 1, [10, 0]);
-  // var bullet_b = new Bullet([0, 10], 1, [0, -1]);
-  // var bullet_c = new Bullet([0, 0], 100, [1, 0]);
-  // var bullet_d = new Bullet([0, 100], 100, [0, -1]);
-  //
-  game.addShip(ship_a);
-  ship_a.isAlive = true;
-  // game.addBullet(bullet_a);
-  // game.addBullet(bullet_b);
-  // game.addBullet(bullet_c);
-  // game.addBullet(bullet_d);
-
   var everyone = nowjs.initialize(app);
   var clients = [];
 
@@ -48,6 +35,7 @@ module.exports = function(app) {
   var onFrameUpdate = function(timeElapsed) {
   };
   var onStepUpdate = function(timeElapsed) {
+    game.update(timeElapsed);
     if(started) {
       everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
     }
