@@ -29,6 +29,9 @@ module.exports = function(app) {
       game.fire(clients[id], orientation);
       clients[id].fireOrientation = orientation;
   }
+  everyone.now.sendChat = function(msg) {
+    everyone.now.receiveChat(msg);
+  }
   /** Game loop */
   var count = 0;
   var onFrameUpdate = function(timeElapsed) {

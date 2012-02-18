@@ -8,7 +8,7 @@ var new_ships = null;
 var WIDTH = 1280;
 var HEIGHT = 700;
 var COOLDOWN = 400;
-var bg_color = '#09F';
+var bg_color = '#0099cc';
 var interp = null;
 var ininterp = null;
 var isDead = false;
@@ -20,7 +20,7 @@ now.ready(function() {
 var keys = [false, false, false, false, false];
 
 $(document).ready(function() {
-  $("body").css("background-color", "#000");
+  $("body").css("background-color", "#3366ff");
   var canvas = document.createElement("canvas");
   ctx = canvas.getContext("2d");
   canvas.width = WIDTH;
@@ -212,11 +212,15 @@ function drawBullet(bullet) {
 
    
 function drawExplosion(explosion){
-    console.log("drawing explosion");
-    ctx.fillStyle = '#FF0000';
+    ctx.fillStyle = '#FF6600';
     ctx.beginPath();
     ctx.arc(explosion.position[0], explosion.position[1], explosion.radius, 0, Math.PI * 2, true);
-    explosion.radius--;
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = '#FF3300';
+    ctx.beginPath();
+    ctx.arc(explosion.position[0], explosion.position[1], explosion.radius - 3, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.fill();
 }

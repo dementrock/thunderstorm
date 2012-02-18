@@ -18,7 +18,7 @@ Game.prototype = {
     // update all explosions
     for(var expoIndex in this.explosions) {
 	var expo = this.explosions[expoIndex];
-	expo.radius--;
+	expo.radius -= 2;
       if(expo.radius <= 0) {
 	  this.removeExplosion(expo);
       }
