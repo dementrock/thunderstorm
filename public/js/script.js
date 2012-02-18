@@ -19,10 +19,12 @@ var keyDown = function(key) {
     var code = key.keyCode;
     if (code == 38 || code == 87) { //up
         now.moveUp(shipId);
+        console.log("client up");
 
     }
     if (code == 40 || code == 83) { //down
         now.moveDown(shipId);
+        console.log("client down");
 
     }
     if (code == 37 || code == 65) { //left
@@ -32,6 +34,8 @@ var keyDown = function(key) {
     }
     if (code == 39 || code == 68) { //right
         now.moveRight(shipId);
+        console.log("client right");
+
     }
 }
 

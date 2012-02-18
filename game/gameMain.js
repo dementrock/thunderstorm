@@ -15,25 +15,22 @@ module.exports = function(app) {
 
   everyone.now.moveUp = function(id) {
     console.log('move up');
-      alert('up ' + id);
     clients[id].setNewOrientation([0, -1]);
   };
   everyone.now.moveDown = function(id) {
     console.log('move down');
 
-      alert('down ' + id);
+
     clients[id].setNewOrientation([0, 1]);
   };
   everyone.now.moveLeft = function(id) {
     console.log('move left');
 
-      //alert('left ' + id);
     clients[id].setNewOrientation([-1, 0]);
   };
   everyone.now.moveRight = function(id) {
     console.log('move right');
 
-      alert('right ' + id);
     clients[id].setNewOrientation([1, 0]);
   };
   everyone.now.fire = function(id, orientation) {
