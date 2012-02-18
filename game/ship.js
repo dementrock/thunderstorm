@@ -36,12 +36,9 @@ Ship.prototype = {
     var ox = this.orientation[0], oy = this.orientation[1];
     this.position = Common.fixPosition([px + ox * this.speed, py + oy * this.speed]);
     this.coolDown = Math.max(this.coolDown - timeElapsed, 0);
-    this.newOrientation = [0,0];
   },
   turn: function(timeElapsed) {
-    if (Common.isSameOrientation(this.orientation, [0,0]) {
-      this.speed = this.speed * 0.75;
-    } else if(this.newOrientation === undefined || Common.isSameOrientation(this.orientation, this.newOrientation)) {
+    if(this.newOrientation === undefined || Common.isSameOrientation(this.orientation, this.newOrientation)) {
       this.speed = Math.min(this.speed + timeElapsed * this.maxSpeed, this.maxSpeed);
     } else {
       this.orientation = Common.normalize(this.newOrientation);
