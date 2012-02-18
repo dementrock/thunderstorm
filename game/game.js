@@ -31,18 +31,20 @@ Game.prototype = {
       // Put bullet on the out loop because it's possible for one bullet to hit
       // multiple ships
       var bullet = this.bullets[bulletIndex];
-      var isHit = false;
-      for(var shipIndex in this.ships) {
-        var ship = this.ships[shipIndex];
-        if (ship.isAlive) {
-          if(this.isIntersect(ship, bullet)) {
-            ship.damage(bullet.damageValue);
-            isHit = true;
+      if (bullet.isAlive) {
+          var isHit = false;
+          for(var shipIndex in this.ships) {
+            var ship = this.ships[shipIndex];
+            if (ship.isAlive) {
+              if(this.isIntersect(ship, bullet)) {
+                ship.damage(bullet.damageValue);
+                isHit = true;
+              }
+            }
           }
-        }
-      }
-      if(isHit) {
-        bullet.isAlive = false;
+          if(isHit) {
+            bullet.isAlive = false;
+          }
       }
     }
     // test for intersection between ships

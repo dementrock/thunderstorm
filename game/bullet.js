@@ -9,17 +9,19 @@ function Bullet(position, speed, orientation) {
   this.damageValue = 10;
 }
 
-Bullet.rawSpeed = 200;
+Bullet.rawSpeed = 20000;
 
 Bullet.prototype = {
   update: function(timeElapsed) {
     if (this.isAlive) {
         var px = this.position[0], py = this.position[1];
         var ox = this.orientation[0], oy = this.orientation[1];
+        console.log(timeElapsed);
         var newx = px + ox * this.speed * timeElapsed, newy = py + oy * this.speed * timeElapsed;
         if (newx <= 0 || newx >= WIDTH || newy <= 0 || newy >= HEIGHT) {
             this.isAlive = false;
         }
+        this.position = [newx, newy];
     }
   },
   // bullet does not turn!
