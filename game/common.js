@@ -24,8 +24,8 @@ var norm = function(p1) {
   return Math.sqrt(p1[0] * p1[0] + p1[1] * p1[1]);
 }
 
-var fixPosition(p) {
-    return [min(WIDTH, max(0, p[0])), min(HEIGHT, max(0, p[1]));;
+var fixPosition = function(p) {
+    return [Math.min(WIDTH, Math.max(0, p[0])), Math.min(HEIGHT, Math.max(0, p[1]))];
 }
 
 exports.normalize = normalize;
