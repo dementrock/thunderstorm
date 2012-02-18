@@ -55,7 +55,7 @@ module.exports = function(app) {
 
   nowjs.on('connect', function() {
     started = true;
-    var ship = new Ship([WIDTH * Math.random(), HEIGHT * Math.random()], this.user.clientId);
+      var ship = new Ship([WIDTH * Math.random(), HEIGHT * Math.random()], this.user.clientId, this.user.clientId);
     game.addShip(ship);
     clients[this.user.clientId] = ship;
     this.now.OnConnect(this.user.clientId);
