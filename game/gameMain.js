@@ -24,6 +24,7 @@ module.exports = function(app) {
     clients[id].setNewOrientation([1, 0]);
   };
   everyone.now.fire = function(id, orientation) {
+      console.log('shoot! with ' + orientation);
     game.fire(clients[id], orientation);
   }
   /** Game loop */

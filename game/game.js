@@ -99,15 +99,17 @@ Game.prototype = {
   },
   fire: function(ship, gunOrientation) {
     if(Common.isEqual(ship.getCoolDown(), 0)) {
+        console.log(gunOrientation);
       gunOrientation = Common.normalize(gunOrientation);
       var shipPos = ship.getPosition();
       console.log(gunOrientation);
-      console.log(Bullet.rawSpeed);
-      var bulletVelocity = [gunOrientation[0] * Bullet.rawSpeed, gunOrientation[1] * Bullet.rawSpeed];
+      console.log('raw speed: '+Bullet.prototype.rawSpeed);
+      var bulletVelocity = [gunOrientation[0] * Bullet.prototype.rawSpeed, gunOrientation[1] * Bullet.prototype.rawSpeed];
       var bulletSpeed = Common.norm(bulletVelocity);
       var bulletOrientation = Common.normalize(bulletVelocity);
       var bulletPosition = [shipPos[0] + ship.radius * 2 * bulletOrientation[0], shipPos[1] + ship.radius * 2 * bulletOrientation[1]];
       console.log(bulletPosition);
+        console.log("added bullet!");
       this.addBullet(new Bullet(bulletPosition, bulletSpeed, bulletOrientation));
       ship.resetCoolDown();
     }
