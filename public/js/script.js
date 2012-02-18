@@ -13,6 +13,8 @@ var interp = null;
 var ininterp = null;
 var isDead = false;
 
+var count = 0;
+
 now.ready(function() {
   //console.log("ready");
 })
@@ -178,10 +180,31 @@ function drawBG() {
 function drawPowerup(powerup) {
     ctx.fillStyle = '#FC0';
     ctx.beginPath();
-    console.log(powerup.position);
-    ctx.arc(powerup.position[0], powerup.position[1], powerup.radius, 0, Math.PI * 2, true);
+    var cx = powerup.position[0], cy = powerup.position[1];
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(count / 3);
+    /*
+    ctx.fillRect(-powerup.radius, -powerup.radius, 2 * powerup.radius, 2 * powerup.radius);
+    */
+
+    ctx.strokeStyle = "orange";
+    ctx.lineWidth = 2;
+    ctx.fillStyle = "#FC0";
+    ctx.beginPath();
+    ctx.moveTo(0, powerup.radius);
+
+    for (var n = 0; n < 10; n++) {
+        var radius = (n % 2 === 0 ? powerup.radius : powerup.radius * 0.5) * 2;
+        var x = radius * Math.sin(n * 2 * Math.PI / 10);
+        var y = radius * Math.cos(n * 2 * Math.PI / 10);
+        ctx.lineTo(x, y);
+    }
+
     ctx.closePath();
     ctx.fill();
+    ctx.stroke();
+    ctx.restore();
 }
 function drawShip(ship, isSelf) {
   if (ship.blink) {
@@ -243,95 +266,55 @@ var TIMES = 25;
 var TIME = 40;
 
 now.OnRender = function(ships, bullets, explosions, powerups) {
-    //console.log("rendering");
-    if (ininterp) {
-        clearTimeout(ininterp);
-        ininterp = null;
+
+    ++count;
+    drawBG();
+    
+    var found = false;
+    for(var shipIndex in ships){
+        var ship = ships[shipIndex];
+        drawShip(ship, ship.id == shipId);
+        if(ship.id == shipId) {
+            my_ship = ship;
+            found = true;
+        }
     }
-    old_ships = new_ships;
-    new_ships = ships;
-    if (!old_ships) {
+    if (!found) {
+        drawText("You are dead! Refresh the page to revenge!");
         return;
     }
 
+    drawMyGun();
+    for (var shipIndex in ships) {
+        var ship = ships[shipIndex];
+        if (ship.id == shipId) {
+            continue;
+        }
+        if (ship.fireOrientation != null ) {
+            drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
+        }
+    }
+
+
+    for(var exploIndex in explosions) {
+         drawExplosion(explosions[exploIndex]);
+    }
+
+    for(var bulletIndex in bullets) {
+        var bullet = bullets[bulletIndex];
+        if(bullet.isAlive) {
+            drawBullet(bullet);
+        }
+    }
+    for (var powerupIndex in powerups) {
+        var powerup = powerups[powerupIndex];
+        if (powerup.isAlive) {
+            drawPowerup(powerup);
+        }
+    }
+    if (my_ship.hp <= 0) {
+        isDead = true;
+    }
     
-
-    interp = function( count ){
-        drawBG();
-        if (isDead) {
-            drawText("You are dead! Refresh the page to revenge!");
-            return;
-        }
-        var found = false;
-        for(var shipIndex in new_ships){
-            var ship = new_ships[shipIndex];
-            /*
-            var old_ship = old_ships[shipIndex];
-            var pos = ship.position, old_pos = old_ship.position;
-            var direction = [pos[0] - old_pos[0], pos[1] - old_pos[1]];
-            var newx = ship.position[0] + 1.0 * direction[0]/TIMES,
-            newy = ship.position[1] + 1.0 * direction[1]/TIMES;
-            newx = Math.max(ship.radius, newx);
-            newx = Math.min(WIDTH - ship.radius, newx);
-            newy = Math.max(ship.radius, newy);
-            newy = Math.min(HEIGHT- ship.radius, newy);
-            ship.position = [newx, newy];*/
-            drawShip(ship, ship.id == shipId);
-            if(ship.id == shipId) {
-                my_ship = ship;
-                found = true;
-            }
-        }
-        if (!found) {
-            drawText("You are dead! Refresh the page to revenge!");
-            return;
-        }
-
-        drawMyGun();
-        for (var shipIndex in ships) {
-            var ship = ships[shipIndex];
-            if (ship.id == shipId) {
-                //console.log('myself!');
-                continue;
-            }
-            //console.log(ship.fireOrientation);
-            if (ship.fireOrientation != null ) {
-                drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
-            }
-        }
-
-
-        for(var exploIndex in explosions) {
-             drawExplosion(explosions[exploIndex]);
-        }
-
-        for(var bulletIndex in bullets) {
-            var bullet = bullets[bulletIndex];
-            if(bullet.isAlive) {
-                drawBullet(bullet);
-            }
-        }
-        for (var powerupIndex in powerups) {
-            var powerup = powerups[powerupIndex];
-            if (powerup.isAlive) {
-                drawPowerup(powerup);
-            }
-        }
-        if (my_ship.hp <= 0) {
-            isDead = true;
-        }
-        if (count > 0){
-            ininterp = function(){ 
-                if (interp) {
-                    interp(count-1); 
-                }
-            }
-            setTimeout(ininterp, TIME ); //?
-        } else {
-            interp = null;
-        }
-    };
-    
-    interp(TIMES);
 }
 
