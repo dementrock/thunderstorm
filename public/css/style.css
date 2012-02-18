@@ -21,3 +21,7 @@ body{background:#eee;margin:0;padding:0}
     width:160px;
     height:120px;
 }
+
+canvas {
+    margin: auto;
+}
