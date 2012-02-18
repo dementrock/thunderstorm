@@ -23,5 +23,9 @@ body{background:#eee;margin:0;padding:0}
 }
 
 canvas {
-    margin: auto;
+  margin: auto;
+  height: 700px;
+  line-height: 700px;
+  display: block;
+  overflow: hidden;
 }

@@ -16,6 +16,8 @@ Game.prototype = {
       var ship = this.ships[shipIndex];
       if(ship.isAlive) {
         ship.update(timeElapsed);
+      } else {
+        this.removeShip(ship);
       }
     }
     // update all bullets
@@ -75,8 +77,8 @@ Game.prototype = {
               dxb *= rb;
               dyb /= normb;
               dyb *= rb;
-              ship_a.setPosition([xa + dxa, ya + dya]);
-              ship_b.setPosition([xb + dxb, yb + dyb]);
+              ship_a.setPosition([xa + dxa/8, ya + dya/8]);
+              ship_b.setPosition([xb + dxb/8, yb + dyb/8]);
             }
           }
         }
