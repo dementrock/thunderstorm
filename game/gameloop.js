@@ -1,5 +1,5 @@
 module.exports = function(onFrameUpdate, onStepUpdate, onRender) {
-  var FPS = 60;
+  var FPS = 20;
   // physics step
   var PS = 1 / FPS;
   var last = Date.now() / 1000;
