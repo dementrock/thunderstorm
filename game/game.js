@@ -87,6 +87,12 @@ Game.prototype = {
   addBullet: function(newBullet) {
     this.bullets.push(newBullet);
   },
+  removeShip: function(newShip) {
+    this.ships.push(newShip);
+  },
+  removeBullet: function(newBullet) {
+    this.bullets.push(newBullet);
+  },
   fire: function(ship, gunOrientation) {
     if(Common.isEqual(ship.getCoolDown(), 0)) {
       gunOrientation = Common.normalize(gunOrientation);
