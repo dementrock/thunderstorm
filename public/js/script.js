@@ -172,28 +172,45 @@ now.OnConnect = function(id) {
   //my_ship = JSON.parse(_ship);
   shipId = id;
   //alert(id);
-}
+};
+
+var TIMES = 4;
+var TIME = 250;
 
 now.OnRender = function(ships, bullets) {
-  var found = false;
-  drawBG();
-  for(var shipIndex in ships) {
-    var ship = ships[shipIndex];
-    drawShip(ship, ship.id == shipId);
-    if(ship.id == shipId) {
-      my_ship = ship;
-        found = true;
-    }
-  }
-    if (!found) {
-        return;
-    }
-  drawGun(my_ship);
+    console.log("rendering");
+    clearTimeout(interp);
+    old_ships = new_ships;
+    new_ships = ships;
+    var direction = [(new_ship[0] - old_ship[0]),
+		     (new_ship[1] - old_ship[1])];
 
-  for(var bulletIndex in bullets) {
-    var bullet = bullets[bulletIndex];
-    if(bullet.isAlive) {
-      drawBullet(bullet);
-    }
-  }
+    (function interp( count ){
+	drawBG();
+	for(var shipIndex in ships){
+	    var ship = ships[shipIndex];
+	    ship.position = [ ship.position[0] + direction[0]/TIMES,
+			      ship.position[1] + direction[1]/TIMES ];
+	    drawShip(ship, ship.id == shipId);
+	    if(ship.id == shipId) {
+		my_ship = ship;
+		found = true;
+	    }
+	    if (!found) {
+		return;
+	    }
+	    drawGun(my_ship);
+	    for(var bulletIndex in bullets) {
+		var bullet = bullets[bulletIndex];
+		if(bullet.isAlive) {
+		    drawBullet(bullet);
+		}
+	    }
+	}
+	if (count){
+	    setTimeout(function(){ 
+		    interp(count-1); 
+		}, TIME ); //?
+	}
+    })(TIMES);
 }
