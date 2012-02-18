@@ -93,7 +93,16 @@ $(document).ready(function() {
     }
     window.mouseYPos = e.pageY;
 
+  });
+  
+  now.receiveChat = function(message) {
+    console.log(msg);
+    //bubbleChat(msg);
+  };
 
+  $("#send").click(function() {
+    now.sendChat($("#chatBox").val());
+    $("#chatBox").val("");
   });
 });
 
@@ -317,4 +326,3 @@ now.OnRender = function(ships, bullets, explosions, powerups) {
     }
     
 }
-
