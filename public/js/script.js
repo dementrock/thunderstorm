@@ -1,6 +1,7 @@
 var ctx;
 var my_ship;
 var shipId;
+var last_fired;
 
 now.ready(function() {
   console.log("ready");
@@ -77,10 +78,20 @@ $(document).ready(function() {
 
   });
 });
+
 var clicked = function(e) {
-  var x = e.pageX;
-  var y = e.pageY;
-  now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
+    time = new Date().getTime();
+    if (!last_fired || time - last_fired >= 1000) {
+        last_fired = time;
+        // console.log('fire! with ');
+        // console.log(my_ship);
+        var x = e.pageX;
+        var y = e.pageY;
+        //  console.log('to ' + x + ', ' + y);
+        //console.log('fire');
+        
+        now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
+    }    
 }
 
 function drawGun(ship) {
