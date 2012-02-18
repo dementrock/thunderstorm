@@ -33,7 +33,7 @@ Ship.prototype = {
     this.turn(timeElapsed);
     var px = this.position[0], py = this.position[1];
     var ox = this.orientation[0], oy = this.orientation[1];
-    this.position = [px + ox * this.speed, py + oy * this.speed];
+    this.position = Common.fixPosition([px + ox * this.speed, py + oy * this.speed]);
     this.coolDown = Math.max(this.coolDown - timeElapsed, 0);
   },
   turn: function(timeElapsed) {
@@ -67,6 +67,9 @@ Ship.prototype = {
   },
   getPosition: function() {
     return this.position;
+  },
+  setPosition: function(pos) {
+    this.position = Common.fixPosition(pos);
   },
   getHp: function() {
     return this.hp;

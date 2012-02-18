@@ -2,6 +2,9 @@ var Common = require('./common');
 var Ship = require('./ship');
 var Bullet = require('./bullet');
 
+WIDTH = 800;
+HEIGHT = 600;
+
 function Game() {
   this.ships = new Array();
   this.bullets = new Array();
@@ -23,7 +26,7 @@ Game.prototype = {
         bullet.update(timeElapsed);
       }
     }
-    // test for intersection
+    // test for intersection between bullets and ships
     for(var bulletIndex in this.bullets) {
       // Put bullet on the out loop because it's possible for one bullet to hit
       // multiple ships
@@ -31,21 +34,49 @@ Game.prototype = {
       var isHit = false;
       for(var shipIndex in this.ships) {
         var ship = this.ships[shipIndex];
-        if(this.isIntersect(ship, bullet)) {
-          ship.damage(bullet.damageValue);
-          isHit = true;
+        if (ship.isAlive) {
+          if(this.isIntersect(ship, bullet)) {
+            ship.damage(bullet.damageValue);
+            isHit = true;
+          }
         }
       }
       if(isHit) {
         bullet.isAlive = false;
       }
     }
-    // broadcast back to clients
-    // TODO
+    // test for intersection between ships
+
+    for(var shipIndex in this.ships) {
+      var ship_a = this.ships[shipIndex];
+      if (ship_a.isAlive) {
+        for(var shipIndex in this.ships) {
+          var ship_b = this.ships[shipIndex];
+          if (ship_b.isAlive) {
+            if (this.isIntersect(ship_a, ship_b)) {
+              // fix their positions
+              var pos_a = ship_a.getPosition();
+              var pos_b = ship_b.getPosition();
+              var ra = ship_a.radius, rb = ship_b.radius;
+              var xa = pos_a[0], ya = pos_a[1], xb = pos_b[0], yb = pos_b[1];
+              var mx = (xa + xb) * 0.5, my = (ya + yb) * 0.5;
+              var dxa = xa - mx, dya = ya - my, dxb = xb - mx, dyb = yb - mx;
+              var norma = Common.norm([dxa, dya]), normb = Common.norm([dxb, dyb]);
+              dxa /= norma; dxa *= ra;
+              dya /= norma; dya *= ra;
+              dxb /= normb; dxb *= rb;
+              dyb /= normb; dyb *= rb;
+              ship_a.setPosision([xa + dxa, ya + dya]);
+              ship_b.setPosision([xb + dxb, yb + dyb]);
+            }
+          }
+        }
+      }
+    }
+
   },
   isIntersect: function(obj1, obj2) {
     return Common.distance(obj1.getPosition(), obj2.getPosition()) <= obj1.getRadius() + obj2.getRadius();
-    exports.distance = distance;
   },
   addShip: function(newShip) {
     this.ships.push(newShip);

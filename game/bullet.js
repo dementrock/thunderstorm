@@ -14,7 +14,7 @@ Bullet.prototype = {
   update: function(timeElapsed) {
     var px = this.position[0], py = this.position[1];
     var ox = this.orientation[0], oy = this.orientation[1];
-    this.position = [px + ox * this.speed * timeElapsed, py + oy * this.speed * timeElapsed];
+    this.position = Common.fixPosition([px + ox * this.speed * timeElapsed, py + oy * this.speed * timeElapsed]);
   },
   // bullet does not turn!
 
