@@ -108,7 +108,7 @@ var clicked = function(e) {
 function drawMyGun() {
     var ship = my_ship;
     //console.log('drawing my gun ' + ship);
-    ctx.strokeStyle = '#F0F';
+    ctx.strokeStyle = '#CC9900';
     var oldWidth = ctx.lineWidth;
     ctx.lineWidth = ship.bulletRadius * 2;
     var x = ship.position[0];
@@ -181,7 +181,7 @@ function drawShip(ship, isSelf) {
     }else if (isSelf) {
       ctx.fillStyle = "#0F0";
   } else {
-      ctx.fillStyle = '#F00';
+      ctx.fillStyle = '#990000';
   }
     
   ctx.beginPath();
