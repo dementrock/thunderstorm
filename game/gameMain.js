@@ -12,6 +12,20 @@ module.exports = function(app) {
     var clients = [];
     //var clients_guns = {};
 
+  everyone.now.moveUpRight = function(id) {
+    clients[id].setNewOrientation([1, -1]);
+  };
+  everyone.now.moveUpLeft = function(id) {
+    clients[id].setNewOrientation([-1, -1]);
+  };
+  everyone.now.moveDownRight = function(id) {
+    clients[id].setNewOrientation([1, 1]);
+  };
+  everyone.now.moveDownLeft = function(id) {
+    clients[id].setNewOrientation([-1, 1]);
+  };
+
+
   everyone.now.moveUp = function(id) {
     clients[id].setNewOrientation([0, -1]);
   };
@@ -29,6 +43,9 @@ module.exports = function(app) {
       game.fire(clients[id], orientation);
       clients[id].fireOrientation = orientation;
   }
+//   everyone.now.nameIs = function(id, name){
+//       clients[id].name = name;
+//   }
   everyone.now.sendChat = function(msg) {
     everyone.now.receiveChat(msg);
   }
@@ -55,6 +72,7 @@ module.exports = function(app) {
               damaged = ships[i].damagedTurns % 2;
           }
           locs.push({
+		  //name : clients[ships[i].id].name,
               position        : ships[i].position,
               radius          : ships[i].radius,
               id              : ships[i].id,
