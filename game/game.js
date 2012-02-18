@@ -55,8 +55,11 @@ Game.prototype = {
               ship.damage(bullet.damageValue);
               if (!ship.isAlive) {
                 console.log('dead');
-                this.addPowerup(new Powerup(ship.position));
-                console.log(this.powerups);
+                if (Math.random() < 0.5) {
+                    this.addPowerup(new Powerup(ship.position, 'speed'));
+                } else {
+                    this.addPowerup(new Powerup(ship.position, 'hp'));
+                }
               }
               this.explosions.push({ radius:20, position: bullet.position });
               isHit = true;
@@ -112,7 +115,11 @@ Game.prototype = {
           var ship = this.ships[shipIndex];
           if (ship.isAlive) {
             if (this.isIntersect(powerup, ship)) {
-              ship.restoreHp();
+              if (powerup.type == 'hp') {
+                ship.restoreHp();
+              } else {
+                ship.maxSpeed += 50;
+              }
               powerup.isAlive = false;
               break;
             }

@@ -21,7 +21,7 @@ var speedShifts = [
     [1, 1, 0, 0, 0],
     [0, 1, 1, 0, 0],
     [0, 0, 1, 1, 0],
-};
+];
 
 now.ready(function() {
     //console.log("ready");
@@ -38,41 +38,86 @@ $(document).ready(function() {
     document.body.appendChild(canvas);
 
 
-    $(window).keydown(function(key) {
-        if (key.keyCode == 38 || key.keyCode == 87) {
-            keys[0] = true;
-        }
-        if (key.keyCode == 40 || key.keyCode == 83) {
-            keys[1] = true;
-        }
-        if (key.keyCode == 37 || key.keyCode == 65) {
-            keys[2] = true;
-        }
-        if (key.keyCode == 39 || key.keyCode == 68) {
-            keys[3] = true;
-        }
-        if (key.keyCode == 32) {
-            keys[4] = true;
-        }
-    });
-    $(window).keyup(function(key) {
-        if (key.keyCode == 38 || key.keyCode == 87) {
-            keys[0] = false;
-        }
-        if (key.keyCode == 40 || key.keyCode == 83) {
-            keys[1] = false;
-        }
-        if (key.keyCode == 37 || key.keyCode == 65) {
-            keys[2] = false;
-        }
-        if (key.keyCode == 39 || key.keyCode == 68) {
-            keys[3] = false;
-        }
-        if (key.keyCode == 32) {
-            keys[4] = false;
-        }
-    })
 
+  $(window).keydown(function(key) {
+    if (key.keyCode == 38 || key.keyCode == 87) {
+      keys[0] = true;
+    }
+    if (key.keyCode == 40 || key.keyCode == 83) {
+      keys[1] = true;
+    }
+    if (key.keyCode == 37 || key.keyCode == 65) {
+      keys[2] = true;
+    }
+    if (key.keyCode == 39 || key.keyCode == 68) {
+      keys[3] = true;
+    }
+    if (key.keyCode == 32) {
+      keys[4] = true;
+    }
+  });
+  $(window).keyup(function(key) {
+    if (key.keyCode == 38 || key.keyCode == 87) {
+      keys[0] = false;
+    }
+    if (key.keyCode == 40 || key.keyCode == 83) {
+      keys[1] = false;
+    }
+    if (key.keyCode == 37 || key.keyCode == 65) {
+      keys[2] = false;
+    }
+    if (key.keyCode == 39 || key.keyCode == 68) {
+      keys[3] = false;
+    }
+    if (key.keyCode == 32) {
+      keys[4] = false;
+    }
+  })
+  
+  setInterval(function() {
+    if (keys[4]) {
+      now.fire(shipId, [window.mouseXPos - my_ship.position[0], window.mouseYPos - my_ship.position[1]]);
+    }
+
+    if (keys[0] && keys[2] ) {
+      now.moveUpLeft(shipId);
+    }
+    else if (keys[0] && keys[3] ) {
+      now.moveUpRight(shipId);
+    }
+    else if (keys[1] && keys[2] ) {
+      now.moveDownLeft(shipId);
+    }
+    else if (keys[1] && keys[3] ) {
+      now.moveDownRight(shipId);
+    }
+
+    else if (keys[0]) {
+      now.moveUp(shipId);
+    }
+    else if (keys[1]) {
+      now.moveDown(shipId);
+    }
+    else if (keys[2]) {
+      now.moveLeft(shipId);
+    }
+    else if (keys[3]) {
+      now.moveRight(shipId);
+    }
+  },100);
+  
+  $(document).click(clicked);
+
+
+  $(document).mousemove(function(e) {
+    if(WIDTH > window.innerWidth) {
+      window.mouseXPos = e.pageX;
+    } else {
+      window.mouseXPos = e.pageX - (window.innerWidth - WIDTH) / 2;
+    }
+    window.mouseYPos = e.pageY;
+
+  });
     setInterval(function() {
         if (keys[0]) {
             now.moveUp(shipId);
@@ -91,18 +136,16 @@ $(document).ready(function() {
         }
     },100);
 
-    $(document).click(clicked);
+  
+  now.receiveChat = function(message) {
+    console.log(msg);
+    //bubbleChat(msg);
+  };
 
-    $(document).mousemove(function(e) {
-        if(WIDTH > window.innerWidth) {
-            window.mouseXPos = e.pageX;
-        } else {
-            window.mouseXPos = e.pageX - (window.innerWidth - WIDTH) / 2;
-        }
-        window.mouseYPos = e.pageY;
-
-
-    });
+  $("#send").click(function() {
+    now.sendChat($("#chatBox").val());
+    $("#chatBox").val("");
+  });
 });
 
 var clicked = function(e) {
@@ -165,27 +208,25 @@ function drawBG() {
 }
 
 function drawPowerup(powerup) {
-    ctx.strokeStyle = '#F0F';
-    var oldWidth = ctx.lineWidth;
-    ctx.lineWidth = 3;
-    var cx = powerup.position[0], cy = powerup.position[1];
-    for (i = -2; i <= 2; ++i) {
-        if (speedShift[counter % 5][i]) {
-            ctx.strokeStyle = '#FC0';
-        } else {
-            ctx.strokeStyle = '#FF9';
+    if (powerup.type == 'speed') {
+        var oldWidth = ctx.lineWidth;
+        ctx.lineWidth = 3;
+        var cx = powerup.position[0], cy = powerup.position[1];
+        for (i = -2; i <= 2; ++i) {
+            if (speedShifts[(count) % 5][i + 2]) {
+                ctx.strokeStyle = '#FC0';
+            } else {
+                ctx.strokeStyle = '#FF9';
+            }
+            ctx.beginPath();
+            ctx.moveTo(cx + powerup.radius, cy + i * powerup.radius + powerup.radius);
+            ctx.lineTo(cx, cy + i * powerup.radius);
+            ctx.lineTo(cx - powerup.radius, cy + i * powerup.radius + powerup.radius);
+            ctx.stroke();
+            ctx.closePath();
         }
-        ctx.beginPath();
-        ctx.moveTo(cx + powerup.radius, cy + i * powerup.radius + powerup.radius);
-        ctx.lineTo(cx, cy + i * powerup.radius);
-        ctx.lineTo(cx - powerup.radius, cy + i * powerup.radius + powerup.radius);
-        ctx.stroke();
-        ctx.closePath();
-    }
-    
-    ctx.lineWidth = oldWidth;
-    //if (powerup.type == 'hp') {
-    /*
+        ctx.lineWidth = oldWidth;
+    } else if (powerup.type == 'hp') {
         ctx.fillStyle = '#FC0';
         ctx.beginPath();
         var cx = powerup.position[0], cy = powerup.position[1];
@@ -209,10 +250,8 @@ function drawPowerup(powerup) {
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        ctx.restore();*/
-    //} else if (powerup.type == 'speed') {
-        
-    //}
+        ctx.restore();
+    }
 }
 function drawShip(ship, isSelf) {
     if (ship.blink) {
@@ -257,6 +296,7 @@ function drawExplosion(explosion){
 
 now.OnConnect = function(id) {
     shipId = id;
+
 };
 
 
@@ -325,4 +365,3 @@ now.OnRender = function(ships, bullets, explosions, powerups) {
     }
 
 }
-

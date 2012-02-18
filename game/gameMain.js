@@ -12,6 +12,20 @@ module.exports = function(app) {
     var clients = [];
     //var clients_guns = {};
 
+  everyone.now.moveUpRight = function(id) {
+    clients[id].setNewOrientation([1, -1]);
+  };
+  everyone.now.moveUpLeft = function(id) {
+    clients[id].setNewOrientation([-1, -1]);
+  };
+  everyone.now.moveDownRight = function(id) {
+    clients[id].setNewOrientation([1, 1]);
+  };
+  everyone.now.moveDownLeft = function(id) {
+    clients[id].setNewOrientation([-1, 1]);
+  };
+
+
   everyone.now.moveUp = function(id) {
     clients[id].setNewOrientation([0, -1]);
   };

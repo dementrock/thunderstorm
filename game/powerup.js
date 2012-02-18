@@ -51,10 +51,11 @@ var Common = require('./common');
     },
 ]*/
     
-function Powerup(position) {
+function Powerup(position, type) {
     this.position = position;
     this.isAlive = true;
     this.radius = 10;
+    this.type = type;
 }
 
 Powerup.prototype = {
