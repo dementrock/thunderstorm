@@ -87,11 +87,15 @@ Game.prototype = {
   addBullet: function(newBullet) {
     this.bullets.push(newBullet);
   },
-  removeShip: function(newShip) {
-    this.ships.push(newShip);
+  removeShip: function(ship) {
+    console.log(this.ships.length);
+    var idx = this.ships.indexOf(ship);
+    if(idx != -1) this.ships.splice(idx, 1);
+    console.log(this.ships.length);
   },
-  removeBullet: function(newBullet) {
-    this.bullets.push(newBullet);
+  removeBullet: function(bullet) {
+    var idx = this.bullets.indexOf(bullet);
+    if(idx != -1) this.bullets.splice(idx, 1);
   },
   fire: function(ship, gunOrientation) {
     if(Common.isEqual(ship.getCoolDown(), 0)) {
