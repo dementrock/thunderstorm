@@ -2,7 +2,7 @@ var ctx;
 var my_ship;
 var shipId;
 var last_fired;
-var WIDTH = 1440;
+var WIDTH = 1280;
 var HEIGHT = 960;
 var COOLDOWN = 1000;
 
