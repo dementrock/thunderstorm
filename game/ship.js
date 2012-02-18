@@ -1,27 +1,41 @@
 var Common = require('./common');
 
+typeList = [
+    {
+        maxSpeed        : 150,
+        hp              : 100,
+        radius          : 10,
+        defaultCoolDown : 0.2,
+        bulletRadius    : 3,
+    },
+    {
+        maxSpeed        : 50,
+        hp              : 300,
+        radius          : 40,
+        defaultCoolDown : 0.5,
+        bulletRadius    : 9,
+    },
+]
+    
 function Ship(position, player, id) {
     rand = Math.random();
     this.speed = 0;
     this.orientation = [0, 0];
     this.position = position;
     this.player = player;
-    this.maxSpeed = 150;
     this.player = null;
-    this.hp = 100;
     this.isAlive = true;
-    this.radius = 10;
     this.coolDown = 0;
-    this.defaultCoolDown = 0.2;
     this.id = id;
-    this.bulletRadius = 3;
 
-    if (rand < 0.5) {
-        this.hp = 500;
-        this.radius = 40;
-        this.bulletRadius = 9;
-        this.defaultCoolDown = 0.5;
-    }
+    var type = typeList[Math.floor ( Math.random() * typeList.length )];
+
+    this.maxSpeed = type.maxSpeed;
+    this.hp = type.hp;
+    this.radius = type.radius;
+    this.defaultCoolDown = type.defaultCoolDown;
+    this.bulletRadius = type.bulletRadius;
+
 }
 
 Ship.prototype = {
