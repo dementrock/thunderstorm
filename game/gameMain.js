@@ -32,6 +32,7 @@ module.exports = function(app) {
   var onFrameUpdate = function(timeElapsed) {
   };
   var onStepUpdate = function(timeElapsed) {
+    //console.log(count++, timeElapsed);
     game.update(timeElapsed);
     if(started) {
       everyone.now.OnRender(JSON.stringify(compactShips(game.ships)), JSON.stringify(game.bullets));

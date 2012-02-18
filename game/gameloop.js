@@ -10,26 +10,10 @@ module.exports = function(onFrameUpdate, onStepUpdate, onRender) {
     var dt = now - last;
     last = now;
     accrued += dt;
-    if(dt > PS) {
-      onStepUpdate(dt - (accrued - PS));
+    while(accrued >= PS) {
+      onStepUpdate(PS);
       accrued -= PS;
-      while(accrued >= PS) {
-        onStepUpdate(PS);
-        accrued -= PS;
-      }
-      dt = accrued;
-    } else {
-      if(accrued >= PS) {
-        onStepUpdate(dt - (accrued - PS));
-        accrued -= PS;
-        dt = accrued;
-      }
     }
-    if(dt > 0.0) {
-      onFrameUpdate(dt);
-    }
-    // render images
-    onRender();
   }
   setInterval(gameLoop, 16);
 }
