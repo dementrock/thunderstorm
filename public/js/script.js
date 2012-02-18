@@ -112,25 +112,36 @@ var clicked = function(e) {
 }
 
 function drawGun(ship) {
-    ctx.strokeStyle = '#F0F';
-    var oldWidth = ctx.lineWidth;
-    ctx.lineWidth = ship.bulletRadius * 2;
-    var x = ship.position[0];
-    var y = ship.position[1];
-    var x2 = window.mouseXPos;
-    var y2 = window.mouseYPos;
+    if (ship.hp > 0) {
+        ctx.strokeStyle = '#F0F';
+        ctx.fillStyle = '#F0F';
+        var oldWidth = ctx.lineWidth;
+        ctx.lineWidth = ship.bulletRadius * 2;
+        var x = ship.position[0];
+        var y = ship.position[1];
+        var x2 = window.mouseXPos;
+        var y2 = window.mouseYPos;
 
 
-    var dx = x2 - x, dy = y2 - y;
-    var norm = Math.sqrt(dx * dx + dy * dy);
-    dx = dx / norm * 2 * ship.radius;
-    dy = dy / norm * 2 * ship.radius;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + dx, y + dy);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.lineWidth = oldWidth;
+        var dx = x2 - x, dy = y2 - y;
+        var norm = Math.sqrt(dx * dx + dy * dy);
+        dx = dx / norm * 2 * ship.radius;
+        dy = dy / norm * 2 * ship.radius;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + dx, y + dy);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x+dx, y+dy, ctx.lineWidth / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.lineWidth = oldWidth;
+    }
 }
 
 function drawBG() {
@@ -175,6 +186,15 @@ now.OnConnect = function(id) {
   //alert(id);
 }
 
+drawText = function(str) {
+    var x = WIDTH / 2;
+    var y = HEIGHT / 2;
+    ctx.font = "30pt Calibri";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "black";
+    ctx.fillText(str, x, y);
+
+}
 now.OnRender = function(ships, bullets) {
   var found = false;
   drawBG();
@@ -196,6 +216,9 @@ now.OnRender = function(ships, bullets) {
     if(bullet.isAlive) {
       drawBullet(bullet);
     }
+  }
+  if (my_ship.hp <= 0) {
+    drawText("You are dead! Refresh the page to revenge!");
   }
 }
 
