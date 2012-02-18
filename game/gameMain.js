@@ -20,7 +20,7 @@ module.exports = function(app) {
     //console.log('frame: ', timeElapsed)
   };
   var onStepUpdate = function(timeElapsed) {
-    console.log(count++, ':', timeElapsed)
+    //console.log(count++, ':', timeElapsed)
   };
   var onRender = function() {
 
