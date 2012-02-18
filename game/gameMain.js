@@ -45,9 +45,10 @@ module.exports = function(app) {
     for(var i in ships) {
       if(ships[i].isAlive) {
         locs.push({
-          position: ships[i].position,
-          radius: ships[i].radius,
-          id : ships[i].id
+          position : ships[i].position,
+          radius   : ships[i].radius,
+          id       : ships[i].id,
+          hp       : ships[i].hp,
         });
       }
     }
