@@ -7,7 +7,7 @@ function Bullet(position, speed, orientation, radius) {
   this.isAlive = true;
   this.lifeTime = 3;
   this.radius = radius;
-  this.damageValue = radius * 2.5;
+  this.damageValue = radius * 5;
 }
 
 Bullet.rawSpeed = 500;

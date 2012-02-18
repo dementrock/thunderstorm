@@ -118,7 +118,7 @@ Game.prototype = {
               if (powerup.type == 'hp') {
                 ship.restoreHp();
               } else {
-                ship.maxSpeed += 50;
+                ship.maxSpeed *= 2;
               }
               powerup.isAlive = false;
               break;
