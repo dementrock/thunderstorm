@@ -16,7 +16,7 @@ function testShip() {
 
     var ship_a = new ship([0, 0], player);
 
-    ship_a.turn(timeInterval, [1, 0]);
+    ship_a.setNewOrientation([1, 0]);
     
     assert(isSame(ship_a.getVelocity(), [0, 0]), "Speed should be 0 after turn");
 
@@ -24,7 +24,7 @@ function testShip() {
 
     assert(isSame(ship_a.getPosition(), [0, 0]), "Position should not change");
 
-    ship_a.turn(timeInterval, [1, 0]);
+    ship_a.setNewOrientation([1, 0]);
 
     ship_a.update(timeInterval);
 
@@ -78,12 +78,12 @@ function testGame() {
 
     game_a.update(1);
 
-    assert(common.isSame(game_a.ships[0].getPosition(), [0, 0]));
+    assert(common.isSame(game_a.ships[0].getPosition(), [0, 0]), game_a.ships[0].getPosition());
     assert(common.isSame(game_a.bullets[0].getPosition(), [11, 0]));
     assert(common.isSame(game_a.bullets[1].getPosition(), [0, 9]));
-    assert(common.isSame(game_a.bullets[2].getPosition(), [0, 9]));
-    console.log(game_a.ships[0].getPosition());
-    console.log(game_a.bullets[0].getPosition());
+    assert(common.isSame(game_a.bullets[2].getPosition(), [100, 0]));
+    assert(common.isSame(game_a.bullets[3].getPosition(), [0, 0]));
+    assert(!game_a.bullets[3].isAlive);
 
     
 
