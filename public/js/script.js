@@ -1,4 +1,5 @@
 var ctx;
+var my_ship;
 now.ready(function() {
 })
 
