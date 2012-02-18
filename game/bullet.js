@@ -4,11 +4,12 @@ function Bullet(position, speed, orientation) {
   this.speed = speed;
   this.orientation = Common.normalize(orientation);
   this.position = position;
-  this.rawSpeed = 200;
   this.isAlive = true;
   this.radius = 3;
   this.damageValue = 10;
 }
+
+Bullet.rawSpeed = 200;
 
 Bullet.prototype = {
   update: function(timeElapsed) {

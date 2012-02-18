@@ -14,7 +14,23 @@ $(document).ready(function() {
   document.body.appendChild(canvas);
 
   $(window).keydown(keyDown);
+    $(document).click(clicked);
+   $(document).mousemove(function(e){
+      window.mouseXPos = e.pageX;
+      window.mouseYPos = e.pageY;
+
+   });
 });
+
+var clicked = function(e) {
+    console.log('fire! with ');
+    console.log(my_ship);
+    var x = e.pageX;
+    var y = e.pageY;
+    console.log('to ' + x + ', ' + y);
+    now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
+}
+  
 var keyDown = function(key) {
     //alert("?");
     var code = key.keyCode;
@@ -41,20 +57,23 @@ var keyDown = function(key) {
 }
 
 function drawGun(ship) {
-    console.log('calling gun with ')
-    console.log(ship.id);
-    ctx.fillStyle = '#FFF'; //white
+ //   console.log('calling gun with ')
+ //   console.log(ship.id);
+    ctx.fillStyle = '#000'; //white
     var x = ship.position[0];
     var y = ship.position[1];
     var x2 = window.mouseXPos;
     var y2 = window.mouseYPos;
     //alert(x2 + " " + y2);
+    
 
     var dx = x2 - x, dy = y2 - y;
     var norm = Math.sqrt(dx*dx + dy*dy);
     dx = dx / norm * ship.radius;
     dy = dy / norm * ship.radius;
-    
+//    console.log('from ' + x + ', ' + y);
+//    console.log('mouse ' + x2 + ', ' + y2);
+//    console.log('to ' + (x+dx) + ', ' + (y+dy));
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(x + dx, y + dy);
@@ -99,7 +118,6 @@ now.OnConnect = function (id) {
 now.OnRender = function(_ships, _bullets) {
   var ships = JSON.parse(_ships);
   var bullets = JSON.parse(_bullets);
-    var my_ship;
   drawBG();
   for(var shipIndex in ships) {
     var ship = ships[shipIndex];
@@ -108,7 +126,7 @@ now.OnRender = function(_ships, _bullets) {
     }
       if (ship.id == shipId) {
           my_ship = ship;
-          console.log('found my ship!');
+     //     console.log('found my ship!');
       }
   }
 
