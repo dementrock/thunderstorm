@@ -36,7 +36,7 @@ Game.prototype = {
       bullet.update(timeElapsed);
       if(!bullet.isAlive) {
         this.removeBullet(bullet);
-	this.explosion.push({ radius:5, position: bullet.position });
+	this.explosions.push({ radius:5, position: bullet.position });
       }
     }
     // test for intersection between bullets and ships
