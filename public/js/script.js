@@ -15,70 +15,70 @@ $(document).ready(function() {
   document.body.appendChild(canvas);
 
   $(window).keydown(keyDown);
-    $(document).click(clicked);
-   $(document).mousemove(function(e){
-      window.mouseXPos = e.pageX;
-      window.mouseYPos = e.pageY;
+  $(document).click(clicked);
+  $(document).mousemove(function(e) {
+    window.mouseXPos = e.pageX;
+    window.mouseYPos = e.pageY;
 
-   });
+  });
 });
-
 var clicked = function(e) {
-    var x = e.pageX;
-    var y = e.pageY;
-    console.log(shipId);
-    now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
+  console.log('fire! with ');
+  console.log(my_ship);
+  var x = e.pageX;
+  var y = e.pageY;
+  console.log('to ' + x + ', ' + y);
+  now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
 }
-  
 var keyDown = function(key) {
-    //alert("?");
-    var code = key.keyCode;
-    if (code == 38 || code == 87) { //up
-        now.moveUp(shipId);
-        console.log("client up");
+  //alert("?");
+  var code = key.keyCode;
+  if(code == 38 || code == 87) {//up
+    now.moveUp(shipId);
+    console.log("client up");
 
-    }
-    if (code == 40 || code == 83) { //down
-        now.moveDown(shipId);
-        console.log("client down");
+  }
+  if(code == 40 || code == 83) {//down
+    now.moveDown(shipId);
+    console.log("client down");
 
-    }
-    if (code == 37 || code == 65) { //left
-        now.moveLeft(shipId);
-        console.log("client left");
+  }
+  if(code == 37 || code == 65) {//left
+    now.moveLeft(shipId);
+    console.log("client left");
 
-    }
-    if (code == 39 || code == 68) { //right
-        now.moveRight(shipId);
-        console.log("client right");
+  }
+  if(code == 39 || code == 68) {//right
+    now.moveRight(shipId);
+    console.log("client right");
 
-    }
+  }
 }
-
 function drawGun(ship) {
- //   console.log('calling gun with ')
- //   console.log(ship.id);
-    ctx.fillStyle = '#000'; //white
-    var x = ship.position[0];
-    var y = ship.position[1];
-    var x2 = window.mouseXPos;
-    var y2 = window.mouseYPos;
-    //alert(x2 + " " + y2);
-    
+  //   console.log('calling gun with ')
+  //   console.log(ship.id);
+  ctx.fillStyle = '#000';
+  //white
+  var x = ship.position[0];
+  var y = ship.position[1];
+  var x2 = window.mouseXPos;
+  var y2 = window.mouseYPos;
+  //alert(x2 + " " + y2);
 
-    var dx = x2 - x, dy = y2 - y;
-    var norm = Math.sqrt(dx*dx + dy*dy);
-    dx = dx / norm * ship.radius;
-    dy = dy / norm * ship.radius;
-//    console.log('from ' + x + ', ' + y);
-//    console.log('mouse ' + x2 + ', ' + y2);
-//    console.log('to ' + (x+dx) + ', ' + (y+dy));
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + dx, y + dy);
-    ctx.closePath();
-    ctx.stroke();
-    
+
+  var dx = x2 - x, dy = y2 - y;
+  var norm = Math.sqrt(dx * dx + dy * dy);
+  dx = dx / norm * ship.radius;
+  dy = dy / norm * ship.radius;
+  //    console.log('from ' + x + ', ' + y);
+  //    console.log('mouse ' + x2 + ', ' + y2);
+  //    console.log('to ' + (x+dx) + ', ' + (y+dy));
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x + dx, y + dy);
+  ctx.closePath();
+  ctx.stroke();
+
 }
 
 function drawBG() {
@@ -108,10 +108,10 @@ function drawBullet(bullet) {
 
 }
 
-now.OnConnect = function (id) {
-    //my_ship = JSON.parse(_ship);
-    shipId = id;
-    //alert(id);
+now.OnConnect = function(id) {
+  //my_ship = JSON.parse(_ship);
+  shipId = id;
+  //alert(id);
 }
 
 now.OnRender = function(_ships, _bullets) {
@@ -120,17 +120,14 @@ now.OnRender = function(_ships, _bullets) {
   drawBG();
   for(var shipIndex in ships) {
     var ship = ships[shipIndex];
-    if(ship.isAlive) {
-      drawShip(ship);
+    drawShip(ship);
+    if(ship.id == shipId) {
+      my_ship = ship;
+      //     console.log('found my ship!');
     }
-      if (ship.id == shipId) {
-          console.log(ship.id);
-          my_ship = ship;
-     //     console.log('found my ship!');
-      }
   }
 
-    drawGun(ship);
+  //drawGun(my_ship);
 
   for(var bulletIndex in bullets) {
     var bullet = bullets[bulletIndex];
