@@ -1,12 +1,13 @@
-var canvas = document.createElement("canvas");
-var ctx = canvas.getContext("2d");
-canvas.width = 800;
-canvas.height = 600;
-document.body.appendChild(canvas);
-
+var ctx;
 
 $(document).ready(function(){
-  $(window).keydown(keyDown);
+    var canvas = document.createElement("canvas");
+    ctx = canvas.getContext("2d");
+    canvas.width = 800;
+    canvas.height = 600;
+    document.body.appendChild(canvas);
+
+    $(window).keydown(keyDown);
 });
 
 var keyDown = function(key) {
