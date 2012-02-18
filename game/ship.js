@@ -2,23 +2,25 @@ var Common = require('./common');
 
 function Ship(position, player, id) {
     rand = Math.random();
-  this.speed = 0;
-  this.orientation = [0, 0];
-  this.position = position;
-  this.player = player;
-  this.maxSpeed = 150;
-  this.player = null;
-  this.hp = 100;
-  this.isAlive = true;
-  this.radius = 10;
-  this.coolDown = 0;
-  this.defaultCoolDown = 0.4;
-  this.id = id;
+    this.speed = 0;
+    this.orientation = [0, 0];
+    this.position = position;
+    this.player = player;
+    this.maxSpeed = 150;
+    this.player = null;
+    this.hp = 100;
+    this.isAlive = true;
+    this.radius = 10;
+    this.coolDown = 0;
+    this.defaultCoolDown = 0.2;
+    this.id = id;
+    this.bulletRadius = 3;
 
     if (rand < 0.5) {
-        this.hp = 300;
+        this.hp = 500;
         this.radius = 40;
-        
+        this.bulletRadius = 9;
+        this.defaultCoolDown = 0.5;
     }
 }
 

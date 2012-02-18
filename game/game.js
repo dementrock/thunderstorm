@@ -111,7 +111,7 @@ Game.prototype = {
       var bulletSpeed = Common.norm(bulletVelocity);
       var bulletOrientation = Common.normalize(bulletVelocity);
       var bulletPosition = [shipPos[0] + ship.radius * 2 * bulletOrientation[0], shipPos[1] + ship.radius * 2 * bulletOrientation[1]];
-      this.addBullet(new Bullet(bulletPosition, bulletSpeed, bulletOrientation));
+        this.addBullet(new Bullet(bulletPosition, bulletSpeed, bulletOrientation, ship.bulletRadius));
       ship.resetCoolDown();
     }
   },

@@ -1,13 +1,13 @@
 var Common = require('./common');
 
-function Bullet(position, speed, orientation) {
+function Bullet(position, speed, orientation, radius) {
   this.speed = 200;
   this.orientation = Common.normalize(orientation);
   this.position = position;
   this.isAlive = true;
   this.lifeTime = 2;
-  this.radius = 3;
-  this.damageValue = 10;
+  this.radius = radius;
+  this.damageValue = radius * 2.5;
 }
 
 Bullet.rawSpeed = 500;
