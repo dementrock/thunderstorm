@@ -9,9 +9,15 @@ $(document).ready(function() {
   $(window).keydown(keyDown);
 });
 var keyDown = function(key) {
-  if(key) {
-    now.moveUp({});
-  }
+    if (key == 38 || key == 87) { //up
+        now.moveUp({});
+    } else if (key == 40 || key == 83) { //down
+        now.moveDown({});
+    } else if (key == 37 || key == 65) { //left
+        now.moveLeft({});
+    } else if (key == 39 || key == 68) { //right
+        now.moveRight({});
+    }
 }
 function drawBG() {
   ctx.fillStyle = '#000';
