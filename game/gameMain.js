@@ -24,7 +24,7 @@ module.exports = function(app) {
     clients[id].setNewOrientation([1, 0]);
   };
   everyone.now.fire = function(id, orientation) {
-      console.log('shoot! with ' + orientation);
+    console.log('shoot! with ' + orientation);
     game.fire(clients[id], orientation);
   }
   /** Game loop */
@@ -34,16 +34,29 @@ module.exports = function(app) {
   var onStepUpdate = function(timeElapsed) {
     game.update(timeElapsed);
     if(started) {
-      everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
+      everyone.now.OnRender(JSON.stringify(computeLocations(game.ships)), JSON.stringify(game.bullets));
     }
   };
   var onRender = function() {
   };
+  var computeLocations = function(ships) {
+    locs = [];
+    for(var i in ships) {
+      if(ships[i].isAlive) {
+        locs.push({
+          position: ships[i].position,
+          radius: ships[i].radius,
+          id : ships[i].id
+        });
+      }
+    }
+    return locs;
+  }
 
   nowjs.on('connect', function() {
     started = true;
-      var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId, this.user.clientId);
-      console.log(ship.id);
+    var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId, this.user.clientId);
+    console.log(ship.id);
     game.addShip(ship);
     clients[this.user.clientId] = ship;
     this.now.OnConnect(this.user.clientId);
