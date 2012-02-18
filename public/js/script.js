@@ -3,13 +3,6 @@ var my_ship;
 var shipId;
 var last_fired;
 
-var image = new Image();
-//image.src = "https://d3qcduphvv2yxi.cloudfront.net/assets/562827/view_large/da56bf7994f519028539ddf52ddbacf9.jpg?1277067092";
-//image.onload = function() {
-    //ctx.fillStyle = ctx.createPattern(image, "repeat");
-    //context.fillRect(0, 0, WIDTH, HEIGHT);
-//}
-
 var old_ships = null;
 var new_ships = null;
 var WIDTH = 1280;
@@ -18,6 +11,7 @@ var COOLDOWN = 400;
 var bg_color = '#09F';
 var interp = null;
 var ininterp = null;
+var isDead = false;
 
 now.ready(function() {
   console.log("ready");
@@ -219,6 +213,10 @@ now.OnRender = function(ships, bullets) {
 
     interp = function( count ){
         drawBG();
+        if (isDead) {
+            drawText("You are dead! Refresh the page to revenge!");
+            return;
+        }
         var found = false;
         for(var shipIndex in new_ships){
             var ship = new_ships[shipIndex];
@@ -239,6 +237,7 @@ now.OnRender = function(ships, bullets) {
             }
         }
         if (!found) {
+            drawText("You are dead! Refresh the page to revenge!");
             return;
         }
         drawGun(my_ship);
@@ -249,7 +248,7 @@ now.OnRender = function(ships, bullets) {
             }
         }
         if (my_ship.hp <= 0) {
-            drawText("You are dead! Refresh the page to revenge!");
+            isDead = true;
         }
         console.log('here');
         if (count > 0){
