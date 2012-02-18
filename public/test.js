@@ -55,10 +55,15 @@ function drawGun(ship) {
     var x2 = window.mouseXPos;
     var y2 = window.mouseYPos;
     //alert(x2 + " " + y2);
+
+    var dx = x2 - x, dy = y2 - y;
+    var norm = Math.sqrt(dx*dx + dy*dy);
+    dx = dx / norm * ship.radius;
+    dy = dy / norm * ship.radius;
     
     ctx.beginPath();
     ctx.moveTo(x, y);
-    ctx.lineTo(x2, y2);
+    ctx.lineTo(x + dx, y + dy);
     ctx.closePath();
     ctx.stroke();
     
