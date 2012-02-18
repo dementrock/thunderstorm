@@ -2,7 +2,7 @@ var common = require('./common');
 
 function Ship(position, player) {
     this.speed = 0;
-    this.orientation = [0, 1]; // default orientation
+    this.orientation = [0, 0]; // default orientation
     this.position = position;
     this.player = player;
 }
@@ -23,6 +23,11 @@ Ship.prototype = {
         this.newOrientation = newOrientation;
     },
 
+    getNewOrientation:
+    function() {
+        return this.newOrientation;
+    },
+
     update:
     function(timeElapsed) {
         this.turn(timeElapsed);
@@ -37,7 +42,7 @@ Ship.prototype = {
             // increase speed
             this.speed = Math.min(this.speed + timeElapsed, this.maxSpeed);
         } else {
-            this.orientation = common.normalize(newOrientation);
+            this.orientation = common.normalize(this.newOrientation);
             this.speed = 0;
         }
         this.newOrientation = undefined;
