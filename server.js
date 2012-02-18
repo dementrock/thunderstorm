@@ -79,5 +79,5 @@ require('./routes')(app);
 require('./game/gameMain')(app);
 
 /** Start listenning. */
-app.listen(config.port);
+app.listen(process.env.PORT || config.port || 80);
 util.log(util.format('ENV: %s, listening on http://%s:%s', config.env, app.address().address, app.address().port));
