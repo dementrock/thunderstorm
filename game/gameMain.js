@@ -24,7 +24,6 @@ module.exports = function(app) {
   everyone.now.moveLeft = function(id) {
     console.log('move left');
 
-      //alert('left ' + id);
     clients[id].setNewOrientation([-1, 0]);
   };
   everyone.now.moveRight = function(id) {
