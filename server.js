@@ -75,8 +75,10 @@ app.configure('production', function() {
 /** Load all the routes. */
 require('./routes')(app);
 
-/** Run the game */
-require('./game/gameMain')(app);
+setTimeout(function() {
+  /** Run the game */
+  require('./game/gameMain')(app);
+}, 1000);
 
 /** Start listenning. */
 app.listen(config.port);

@@ -1,6 +1,6 @@
 module.exports = function(app) {
   var everyone = require('now').initialize(app);
-
+  
   everyone.now.moveUp = function(ship) {
     console.log('move up');
   };
@@ -13,6 +13,9 @@ module.exports = function(app) {
   everyone.now.moveRight = function(ship) {
     console.log('move right');
   };
+  everyone.now.fire = function(ship) {
+    
+  }
   
   /** Game loop */
   var count = 0;
