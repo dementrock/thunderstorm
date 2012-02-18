@@ -6,7 +6,6 @@ var WIDTH = 1280;
 var HEIGHT = 700;
 var COOLDOWN = 400;
 
-
 now.ready(function() {
   console.log("ready");
 })
