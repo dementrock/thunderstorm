@@ -18,7 +18,6 @@ $(document).ready(function() {
 
 
   $(window).keydown(function(key) {
-    console.log(key.keyCode);
     if (key.keyCode == 38 || key.keyCode == 87) {
       keys[0] = true;
     }
@@ -54,26 +53,20 @@ $(document).ready(function() {
   })
   
   setInterval(function() {
-    console.log(keys);
     if (keys[0]) {
       now.moveUp(shipId);
-      console.log("client up");
     }
     if (keys[1]) {
       now.moveDown(shipId);
-      console.log("client down");
     }
     if (keys[2]) {
       now.moveLeft(shipId);
-      console.log("client left");
     }
     if (keys[3]) {
       now.moveRight(shipId);
-      console.log("client right");
     }
     if (keys[4]) {
       now.fire(shipId, [window.mouseXPos - my_ship.position[0], window.mouseYPos - my_ship.position[1]]);
-      console.log("fire");
     }
   },100);
   
@@ -85,11 +78,8 @@ $(document).ready(function() {
   });
 });
 var clicked = function(e) {
-  console.log('fire! with ');
-  console.log(my_ship);
   var x = e.pageX;
   var y = e.pageY;
-  console.log('to ' + x + ', ' + y);
   now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
 }
 
@@ -158,7 +148,6 @@ now.OnRender = function(_ships, _bullets) {
     drawShip(ship, ship.id == shipId);
     if(ship.id == shipId) {
       my_ship = ship;
-      //     console.log('found my ship!');
     }
   }
 
