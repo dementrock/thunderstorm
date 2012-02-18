@@ -6,6 +6,13 @@ var WIDTH = 1440;
 var HEIGHT = 960;
 var COOLDOWN = 1000;
 
+var image = new Image();
+//image.src = "https://d3qcduphvv2yxi.cloudfront.net/assets/562827/view_large/da56bf7994f519028539ddf52ddbacf9.jpg?1277067092";
+//image.onload = function() {
+    //ctx.fillStyle = ctx.createPattern(image, "repeat");
+    //context.fillRect(0, 0, WIDTH, HEIGHT);
+//}
+
 
 now.ready(function() {
   console.log("ready");
@@ -100,7 +107,9 @@ var clicked = function(e) {
 }
 
 function drawGun(ship) {
-  ctx.fillStyle = '#000';
+  ctx.strokeStyle = '#F0F';
+  var oldWidth = ctx.lineWidth;
+  ctx.lineWidth = 4;
   var x = ship.position[0];
   var y = ship.position[1];
   var x2 = window.mouseXPos;
@@ -109,13 +118,14 @@ function drawGun(ship) {
 
   var dx = x2 - x, dy = y2 - y;
   var norm = Math.sqrt(dx * dx + dy * dy);
-  dx = dx / norm * ship.radius;
-  dy = dy / norm * ship.radius;
+  dx = dx / norm * 2 * ship.radius;
+  dy = dy / norm * 2 * ship.radius;
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x + dx, y + dy);
   ctx.closePath();
   ctx.stroke();
+  ctx.lineWidth = oldWidth;
 
 }
 
