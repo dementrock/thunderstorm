@@ -34,13 +34,13 @@ module.exports = function(app) {
   var onStepUpdate = function(timeElapsed) {
     game.update(timeElapsed);
     if(started) {
-      everyone.now.OnRender(JSON.stringify(computeLocations(game.ships)), JSON.stringify(game.bullets));
+      everyone.now.OnRender(JSON.stringify(compactShips(game.ships)), JSON.stringify(game.bullets));
     }
   };
   var onRender = function() {
   };
-  var computeLocations = function(ships) {
-    locs = [];
+  var compactShips = function(ships) {
+    var locs = [];
     for(var i in ships) {
       if(ships[i].isAlive) {
         locs.push({
@@ -52,7 +52,18 @@ module.exports = function(app) {
     }
     return locs;
   }
-
+  var compactBullets = function(bullets) {
+    var bulletlocs = [];
+    for(var i in bullets) {
+      if(bullets[i].isAlive) {
+        bulletlocs.push({
+          position: bullets[i].position,
+          radius: bullets[i].radius,
+        });
+      }
+    }
+    return bulletlocs;
+  }
   nowjs.on('connect', function() {
     started = true;
       var ship = new Ship([WIDTH * Math.random(), HEIGHT * Math.random()], this.user.clientId, this.user.clientId);

@@ -122,7 +122,6 @@ now.OnRender = function(_ships, _bullets) {
     drawShip(ship);
     if(ship.id == shipId) {
       my_ship = ship;
-      //     console.log('found my ship!');
     }
   }
 
