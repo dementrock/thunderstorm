@@ -208,7 +208,8 @@ function drawBG() {
 }
 
 function drawPowerup(powerup) {
-    if (powerup.type == 'speed') {
+    console.log(powerup.type);
+    if (powerup.type == "speed") {
         var oldWidth = ctx.lineWidth;
         ctx.lineWidth = 3;
         var cx = powerup.position[0], cy = powerup.position[1];
@@ -226,7 +227,7 @@ function drawPowerup(powerup) {
             ctx.closePath();
         }
         ctx.lineWidth = oldWidth;
-    } else if (powerup.type == 'hp') {
+    } else {
         ctx.fillStyle = '#FC0';
         ctx.beginPath();
         var cx = powerup.position[0], cy = powerup.position[1];

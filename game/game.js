@@ -56,9 +56,9 @@ Game.prototype = {
               if (!ship.isAlive) {
                 console.log('dead');
                 if (Math.random() < 0.5) {
-                    this.addPowerup(new Powerup(ship.position, 'speed'));
+                    this.addPowerup(new Powerup(ship.position, "speed"));
                 } else {
-                    this.addPowerup(new Powerup(ship.position, 'hp'));
+                    this.addPowerup(new Powerup(ship.position, "hp"));
                 }
               }
               this.explosions.push({ radius:20, position: bullet.position });
