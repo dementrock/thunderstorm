@@ -2,9 +2,12 @@ var ctx;
 var my_ship;
 var shipId;
 var last_fired;
+
 now.ready(function() {
   console.log("ready");
 })
+
+var keys = [false, false, false, false, false];
 
 $(document).ready(function() {
   $("body").css("background-color", "#003");
@@ -14,7 +17,60 @@ $(document).ready(function() {
   canvas.height = 600;
   document.body.appendChild(canvas);
 
-  $(window).keydown(keyDown);
+
+  $(window).keydown(function(key) {
+    if (key.keyCode == 38 || key.keyCode == 87) {
+      keys[0] = true;
+    }
+    if (key.keyCode == 40 || key.keyCode == 83) {
+      keys[1] = true;
+    }
+    if (key.keyCode == 37 || key.keyCode == 65) {
+      keys[2] = true;
+    }
+    if (key.keyCode == 39 || key.keyCode == 68) {
+      keys[3] = true;
+    }
+    if (key.keyCode == 32) {
+      keys[4] = true;
+    }
+  });
+  $(window).keyup(function(key) {
+    if (key.keyCode == 38 || key.keyCode == 87) {
+      keys[0] = false;
+    }
+    if (key.keyCode == 40 || key.keyCode == 83) {
+      keys[1] = false;
+    }
+    if (key.keyCode == 37 || key.keyCode == 65) {
+      keys[2] = false;
+    }
+    if (key.keyCode == 39 || key.keyCode == 68) {
+      keys[3] = false;
+    }
+    if (key.keyCode == 32) {
+      keys[4] = false;
+    }
+  })
+  
+  setInterval(function() {
+    if (keys[0]) {
+      now.moveUp(shipId);
+    }
+    if (keys[1]) {
+      now.moveDown(shipId);
+    }
+    if (keys[2]) {
+      now.moveLeft(shipId);
+    }
+    if (keys[3]) {
+      now.moveRight(shipId);
+    }
+    if (keys[4]) {
+      now.fire(shipId, [window.mouseXPos - my_ship.position[0], window.mouseYPos - my_ship.position[1]]);
+    }
+  },100);
+  
   $(document).click(clicked);
   $(document).mousemove(function(e) {
     window.mouseXPos = e.pageX;
@@ -32,44 +88,12 @@ var clicked = function(e) {
         var x = e.pageX;
         var y = e.pageY;
         //  console.log('to ' + x + ', ' + y);
-        console.log('fire');
+        //console.log('fire');
         
         now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
     }    
 }
 
-var clicked = function(e) {
-  console.log('fire! with ');
-  console.log(my_ship);
-  var x = e.pageX;
-  var y = e.pageY;
-  console.log('to ' + x + ', ' + y);
-  now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
-}
-var keyDown = function(key) {
-  //alert("?");
-  var code = key.keyCode;
-  if(code == 38 || code == 87) {//up
-    now.moveUp(shipId);
-    console.log("client up");
-
-  }
-  if(code == 40 || code == 83) {//down
-    now.moveDown(shipId);
-    console.log("client down");
-
-  }
-  if(code == 37 || code == 65) {//left
-    now.moveLeft(shipId);
-    console.log("client left");
-
-  }
-  if(code == 39 || code == 68) {//right
-    now.moveRight(shipId);
-    console.log("client right");
-
-  }
-}
 function drawGun(ship) {
   ctx.fillStyle = '#000';
   var x = ship.position[0];
@@ -135,7 +159,6 @@ now.OnRender = function(_ships, _bullets) {
     drawShip(ship, ship.id == shipId);
     if(ship.id == shipId) {
       my_ship = ship;
-      //     console.log('found my ship!');
     }
   }
 
