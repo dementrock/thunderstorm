@@ -1,4 +1,3 @@
-
 module.exports = function(onFrameUpdate, onStepUpdate, onRender) {
   var FPS = 60;
   // physics step
@@ -32,6 +31,5 @@ module.exports = function(onFrameUpdate, onStepUpdate, onRender) {
     // render images
     onRender();
   }
-
   setInterval(gameLoop, 16);
 }
