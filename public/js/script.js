@@ -126,7 +126,7 @@ now.OnRender = function(_ships, _bullets) {
     }
   }
 
-  //drawGun(my_ship);
+  drawGun(my_ship);
 
   for(var bulletIndex in bullets) {
     var bullet = bullets[bulletIndex];
