@@ -44,12 +44,19 @@ module.exports = function(app) {
     var locs = [];
     for(var i in ships) {
       if(ships[i].isAlive) {
-        locs.push({
-          position : ships[i].position,
-          radius   : ships[i].radius,
-          id       : ships[i].id,
-          hp       : ships[i].hp,
-        });
+          damaged = false;
+          if (ships[i].damagedTurns > 0) {
+              ships[i].damagedTurns -= 1;
+              damaged = ships[i].damagedTurns % 2;
+          }
+          locs.push({
+              position : ships[i].position,
+              radius   : ships[i].radius,
+              id       : ships[i].id,
+              hp       : ships[i].hp,
+              blink: damaged,
+              bulletRadius : ships[i].bulletRadius,
+          });
       }
     }
     return locs;

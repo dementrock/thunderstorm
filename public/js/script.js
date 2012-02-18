@@ -109,7 +109,7 @@ var clicked = function(e) {
 function drawGun(ship) {
     ctx.strokeStyle = '#F0F';
     var oldWidth = ctx.lineWidth;
-    ctx.lineWidth = 4;
+    ctx.lineWidth = ship.bulletRadius * 2;
     var x = ship.position[0];
     var y = ship.position[1];
     var x2 = window.mouseXPos;
@@ -138,11 +138,14 @@ function drawBG() {
 }
 
 function drawShip(ship, isSelf) {
-  if (isSelf) {
+  if (ship.blink) {
+      ctx.fillStyle = "#999";
+    }else if (isSelf) {
       ctx.fillStyle = "#0F0";
   } else {
       ctx.fillStyle = '#F00';
   }
+    
   ctx.beginPath();
   ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
   ctx.closePath();

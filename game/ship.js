@@ -7,6 +7,7 @@ typeList = [
         radius          : 10,
         defaultCoolDown : 0.2,
         bulletRadius    : 3,
+        damagedTurns    : 0,
     },
     {
         maxSpeed        : 50,
@@ -14,6 +15,7 @@ typeList = [
         radius          : 40,
         defaultCoolDown : 0.5,
         bulletRadius    : 9,
+        damagedTurns    : 0,
     },
 ]
     
@@ -87,6 +89,7 @@ Ship.prototype = {
       this.hp = 0;
       this.isAlive = false;
     }
+      this.damagedTurns = 30;
   },
   getSpeed: function() {
     return this.speed;
