@@ -57,18 +57,16 @@ module.exports = function(app) {
   var compactBullets = function(bullets) {
     var bulletlocs = [];
     for(var i in bullets) {
-      if(bullets[i].isAlive) {
-        bulletlocs.push({
-          position: bullets[i].position,
-          radius: bullets[i].radius,
-        });
-      }
+      bulletlocs.push({
+        position: bullets[i].position,
+        radius: bullets[i].radius,
+      });
     }
     return bulletlocs;
   }
   nowjs.on('connect', function() {
     started = true;
-      var ship = new Ship([WIDTH * Math.random(), HEIGHT * Math.random()], this.user.clientId, this.user.clientId);
+    var ship = new Ship([WIDTH * Math.random(), HEIGHT * Math.random()], this.user.clientId, this.user.clientId);
     game.addShip(ship);
     clients[this.user.clientId] = ship;
     this.now.OnConnect(this.user.clientId);
