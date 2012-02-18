@@ -76,14 +76,7 @@ app.configure('production', function() {
 require('./routes')(app);
 
  /** Run the game */
-
-var nowjs = require('now');
-var everyone = nowjs.initialize(app);
-
-everyone.now.requestData = function () {
-  this.now.abc();
-}
-//require('./game/gameMain')(app);
+require('./game/gameMain')(app);
 
 /** Start listenning. */
 app.listen(config.port);

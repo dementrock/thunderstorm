@@ -1,7 +1,7 @@
 var Ship = require('./ship');
 var Bullet = require('./bullet');
 var Game = require('./game');
-var Common = require('./common');
+var Common = require('./Common');
 var nowjs = require('now');
 var started = false;
 
@@ -28,24 +28,17 @@ module.exports = function(app) {
   /** Game loop */
   var count = 0;
   var onFrameUpdate = function(timeElapsed) {
-    //console.log('frame: ', timeElapsed)
   };
   var onStepUpdate = function(timeElapsed) {
-    // for(var i in clients) {
-      // nowjs.getClient(i, function(err) {
-        // this.now.OnRender("aa");
-      // });
-    // }
-    //console.log(everyone.now);
-    //everyone.now["OnRender"](JSON.stringify(game.ships),
-    // JSON.stringify(game.bullets));
-
+    if (started)
+      everyone.now.OnRender(JSON.stringify(game.ships));
   };
   var onRender = function() {
 
   };
   
   nowjs.on('connect', function() {
+    started = true;
     clients[this.user.clientId] = {
       x: 0,
       y: 0
@@ -61,9 +54,5 @@ module.exports = function(app) {
     }
   });
 
-  setTimeout(function() {
-    //everyone.now["OnRender"](JSON.stringify(game.ships),
-    // JSON.stringify(game.bullets));
-    require('./gameloop')(onFrameUpdate, onStepUpdate, onRender);
-  }, 1000);
+  require('./gameloop')(onFrameUpdate, onStepUpdate, onRender);
 }

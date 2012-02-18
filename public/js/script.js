@@ -1,28 +1,26 @@
+now.ready(function () {
+})
 
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 600;
-document.body.appendChild(canvas);
+//document.body.appendChild(canvas);
 
 
 $(document).ready(function() {
-  setInterval(function(){
-    now.requestData();
-  },2000);
   $(window).keydown(keyDown);
 });
-
 var keyDown = function(key) {
-    if (key == 38 || key == 87) { //up
-        now.moveUp({});
-    } else if (key == 40 || key == 83) { //down
-        now.moveDown({});
-    } else if (key == 37 || key == 65) { //left
-        now.moveLeft({});
-    } else if (key == 39 || key == 68) { //right
-        now.moveRight({});
-    }
+  if(key == 38 || key == 87) {//up
+    now.moveUp({});
+  } else if(key == 40 || key == 83) {//down
+    now.moveDown({});
+  } else if(key == 37 || key == 65) {//left
+    now.moveLeft({});
+  } else if(key == 39 || key == 68) {//right
+    now.moveRight({});
+  }
 }
 function drawBG() {
   ctx.fillStyle = '#000';
@@ -53,24 +51,5 @@ function drawBullet(bullet) {
 
 }
 
-now.abc = function(gameState) {
-  console.log(gameState);
-  // var game = JSON.parse(gameState);
-  // //game.ships
-  // //game.bullets
-// 
-  // drawBG();
-  // for(var shipIndex in game.ships) {
-    // var ship = this.ships[shipIndex];
-    // if(ship.isAlive) {
-      // drawShip(ship);
-    // }
-  // }
-// 
-  // for(var bulletIndex in game.bullets) {
-    // var bullet = game.bullets[bulletIndex];
-    // if(bullet.isAlive) {
-      // drawBullet(bullet);
-    // }
-  // }
+now.OnRender = function(gameState) {
 }
