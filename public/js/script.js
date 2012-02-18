@@ -265,7 +265,7 @@ function drawShip(ship, isSelf) {
       ctx.fillStyle = '#990000';
   }
     
-  ctx.font = "20pt Calibri";
+  ctx.font = "14pt Calibri";
   ctx.width = 40;
   ctx.fillText(ship.name || "Unknown", ship.position[0] - ship.radius, ship.position[1] + ship.radius*2.5 );
 
