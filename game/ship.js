@@ -12,7 +12,7 @@ Ship.prototype = {
     
     hp: 100,
     isAlive: true,
-    radius: 5,
+    radius: 10,
     //bulletType: normalBullet,
     gunOrientation: [0, 1],
     player: null,
@@ -70,6 +70,11 @@ Ship.prototype = {
     getHp:
     function() {
         return this.hp;
+    },
+
+    getRadius:
+    function() {
+        return this.radius;
     },
 };
 

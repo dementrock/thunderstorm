@@ -1,3 +1,5 @@
+var common = require('./common');
+
 function Game() {
     this.ships = new Array();
     this.bullets = new Array();
@@ -41,5 +43,24 @@ Game.prototype = {
         }
         // broadcast back to clients
         // TODO
-    }
+    },
+
+    isIntersect:
+    function(obj1, obj2) {
+        return common.distance(obj1.getPosition(), obj2.getPosition()) <= obj1.getRadius() + obj2.getRadius(); 
+        exports.distance = distance;
+    },
+
+    addShip:
+    function(newShip) {
+        this.ships.push(newShip);
+    },
+
+    addBullet:
+    function(newBullet) {
+        this.bullets.push(newBullet);
+    },
+
 };
+
+module.exports = Game;

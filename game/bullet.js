@@ -9,7 +9,7 @@ function Bullet(position, speed, orientation) {
 Bullet.prototype = {
     
     isAlive: true,
-    radius: 1,
+    radius: 3,
     damageValue: 10,
 
     update:
@@ -45,6 +45,11 @@ Bullet.prototype = {
     getPosition:
     function() {
         return this.position;
+    },
+
+    getRadius:
+    function() {
+        return this.radius;
     },
 };
 
