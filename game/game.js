@@ -1,4 +1,6 @@
-var common = require('./common');
+var Common = require('./Common');
+var Ship = require('./ship');
+var Bullet = require('./bullet');
 
 function Game() {
     this.ships = new Array();
@@ -44,7 +46,7 @@ Game.prototype = {
 
     isIntersect:
     function(obj1, obj2) {
-        return common.distance(obj1.getPosition(), obj2.getPosition()) <= obj1.getRadius() + obj2.getRadius(); 
+        return Common.distance(obj1.getPosition(), obj2.getPosition()) <= obj1.getRadius() + obj2.getRadius(); 
         exports.distance = distance;
     },
 
@@ -56,6 +58,23 @@ Game.prototype = {
     addBullet:
     function(newBullet) {
         this.bullets.push(newBullet);
+    },
+
+    fire:
+    function(ship, gunOrientation) {
+        if (Common.isEqual(ship.getCoolDown(), 0)) {
+            gunOrientation = Common.normalize(gunOrientation);
+            var shipPos = ship.getPosition();
+            console.log(gunOrientation);
+            console.log(Bullet.rawSpeed);
+            var bulletVelocity = [gunOrientation[0] * Bullet.rawSpeed, gunOrientation[1] * Bullet.rawSpeed];
+            var bulletSpeed = Common.norm(bulletVelocity);
+            var bulletOrientation = Common.normalize(bulletVelocity);
+            var bulletPosition = [shipPos[0] + ship.radius * 2 * bulletOrientation[0], shipPos[1] + ship.radius * 2 * bulletOrientation[1]];
+            console.log(bulletPosition);
+            this.addBullet(new Bullet(bulletPosition, bulletSpeed, bulletOrientation));
+            ship.resetCoolDown();
+        }
     },
 
 };
