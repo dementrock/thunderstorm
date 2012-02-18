@@ -6,6 +6,8 @@ now.ready(function() {
   console.log("ready");
 })
 
+var keys = [false, false, false, false, false];
+
 $(document).ready(function() {
   var canvas = document.createElement("canvas");
   ctx = canvas.getContext("2d");
@@ -13,7 +15,66 @@ $(document).ready(function() {
   canvas.height = 600;
   document.body.appendChild(canvas);
 
-  $(window).keydown(keyDown);
+  $(window).keydown(function(key) {
+    console.log(key.keyCode);
+    if (key.keyCode == 38 || key.keyCode == 87) {
+      keys[0] = true;
+    }
+    if (key.keyCode == 40 || key.keyCode == 83) {
+      keys[1] = true;
+    }
+    if (key.keyCode == 37 || key.keyCode == 65) {
+      keys[2] = true;
+    }
+    if (key.keyCode == 39 || key.keyCode == 68) {
+      keys[3] = true;
+    }
+    if (key.keyCode == 32) {
+      keys[4] = true;
+    }
+  });
+  $(window).keyup(function(key) {
+    if (key.keyCode == 38 || key.keyCode == 87) {
+      keys[0] = false;
+    }
+    if (key.keyCode == 40 || key.keyCode == 83) {
+      keys[1] = false;
+    }
+    if (key.keyCode == 37 || key.keyCode == 65) {
+      keys[2] = false;
+    }
+    if (key.keyCode == 39 || key.keyCode == 68) {
+      keys[3] = false;
+    }
+    if (key.keyCode == 32) {
+      keys[4] = false;
+    }
+  })
+  
+  setInterval(function() {
+    console.log(keys);
+    if (keys[0]) {
+      now.moveUp(shipId);
+      console.log("client up");
+    }
+    if (keys[1]) {
+      now.moveDown(shipId);
+      console.log("client down");
+    }
+    if (keys[2]) {
+      now.moveLeft(shipId);
+      console.log("client left");
+    }
+    if (keys[3]) {
+      now.moveRight(shipId);
+      console.log("client right");
+    }
+    if (keys[4]) {
+      now.fire(shipId, [window.mouseXPos - my_ship.position[0], window.mouseYPos - my_ship.position[1]]);
+      console.log("fire");
+    }
+  },100);
+  
   $(document).click(clicked);
   $(document).mousemove(function(e) {
     window.mouseXPos = e.pageX;
@@ -21,6 +82,7 @@ $(document).ready(function() {
 
   });
 });
+
 var clicked = function(e) {
   console.log('fire! with ');
   console.log(my_ship);
@@ -29,30 +91,7 @@ var clicked = function(e) {
   console.log('to ' + x + ', ' + y);
   now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
 }
-var keyDown = function(key) {
-  //alert("?");
-  var code = key.keyCode;
-  if(code == 38 || code == 87) {//up
-    now.moveUp(shipId);
-    console.log("client up");
 
-  }
-  if(code == 40 || code == 83) {//down
-    now.moveDown(shipId);
-    console.log("client down");
-
-  }
-  if(code == 37 || code == 65) {//left
-    now.moveLeft(shipId);
-    console.log("client left");
-
-  }
-  if(code == 39 || code == 68) {//right
-    now.moveRight(shipId);
-    console.log("client right");
-
-  }
-}
 function drawGun(ship) {
   //   console.log('calling gun with ')
   //   console.log(ship.id);
