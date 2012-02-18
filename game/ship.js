@@ -34,7 +34,12 @@ Ship.prototype = {
     this.turn(timeElapsed);
     var px = this.position[0], py = this.position[1];
     var ox = this.orientation[0], oy = this.orientation[1];
-    this.position = Common.fixPosition([px + ox * this.speed, py + oy * this.speed]);
+    var newx = px + ox * this.speed, newy = py + oy * this.speed;
+    newx = Math.max(newx, this.radius);
+    newx = Math.min(newx, WIDTH - this.radius);
+    newy = Math.max(newy, this.radius);
+    newy = Math.min(newy, HEIGHT - this.radius);
+    this.position = [newx, newy];
     this.coolDown = Math.max(this.coolDown - timeElapsed, 0);
   },
   turn: function(timeElapsed) {
@@ -46,7 +51,7 @@ Ship.prototype = {
       this.speed = Math.min(this.speed + timeElapsed * this.maxSpeed, this.maxSpeed);
     } else {
       this.orientation = Common.normalize(this.newOrientation);
-      this.speed = 0;
+      this.speed *= 0.5;
     }
     this.newOrientation = undefined;
   },

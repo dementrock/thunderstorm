@@ -12,19 +12,15 @@ module.exports = function(app) {
   var clients = [];
 
   everyone.now.moveUp = function(id) {
-    console.log('move up');
     clients[id].setNewOrientation([0, -1]);
   };
   everyone.now.moveDown = function(id) {
-    console.log('move down');
     clients[id].setNewOrientation([0, 1]);
   };
   everyone.now.moveLeft = function(id) {
-    console.log('move left');
     clients[id].setNewOrientation([-1, 0]);
   };
   everyone.now.moveRight = function(id) {
-    console.log('move right');
     clients[id].setNewOrientation([1, 0]);
   };
   everyone.now.fire = function(id, orientation) {
@@ -45,7 +41,8 @@ module.exports = function(app) {
 
   nowjs.on('connect', function() {
     started = true;
-    var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
+      var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId, this.user.clientId);
+      console.log(ship.id);
     game.addShip(ship);
     clients[this.user.clientId] = ship;
     this.now.OnConnect(this.user.clientId);
