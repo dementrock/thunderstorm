@@ -5,7 +5,7 @@ function Bullet(position, speed, orientation, radius) {
   this.orientation = Common.normalize(orientation);
   this.position = position;
   this.isAlive = true;
-  this.lifeTime = 2;
+  this.lifeTime = 3;
   this.radius = radius;
   this.damageValue = radius * 2.5;
 }
