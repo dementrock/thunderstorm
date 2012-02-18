@@ -1,16 +1,19 @@
-var common = require('./common');
+var Common = require('./common');
 
 function Bullet(position, speed, orientation) {
     this.speed = speed;
-    this.orientation = common.normalize(orientation);
+    this.orientation = Common.normalize(orientation);
     this.position = position;
 }
+
+Bullet.rawSpeed = 10;
 
 Bullet.prototype = {
     
     isAlive: true,
     radius: 3,
     damageValue: 10,
+    rawSpeed: 200,
 
     update:
     function(timeElapsed) {

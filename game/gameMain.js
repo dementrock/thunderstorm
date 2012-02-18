@@ -1,6 +1,15 @@
+var Ship = require('./ship');
+var Bullet = require('./bullet');
+var Game = require('./game');
+var Common = require('./common');
+var nowjs = require('now');
+var started = false;
+
 module.exports = function(app) {
-  var everyone = require('now').initialize(app);
-  
+  var game = new Game();
+  var everyone = nowjs.initialize(app);
+  var clients = [];
+
   everyone.now.moveUp = function(ship) {
     console.log('move up');
   };
@@ -13,20 +22,48 @@ module.exports = function(app) {
   everyone.now.moveRight = function(ship) {
     console.log('move right');
   };
-  everyone.now.fire = function(ship) {
-    
+  everyone.now.fire = function(shipGUID, orientation) {
+    game.fire(game.getShip(shipGUID), orientation);
   }
-  
   /** Game loop */
   var count = 0;
   var onFrameUpdate = function(timeElapsed) {
     //console.log('frame: ', timeElapsed)
   };
   var onStepUpdate = function(timeElapsed) {
-    //console.log(count++, ':', timeElapsed)
+    // for(var i in clients) {
+      // nowjs.getClient(i, function(err) {
+        // this.now.OnRender("aa");
+      // });
+    // }
+    //console.log(everyone.now);
+    //everyone.now["OnRender"](JSON.stringify(game.ships),
+    // JSON.stringify(game.bullets));
+
   };
   var onRender = function() {
 
   };
-  require('./gameloop')(onFrameUpdate, onStepUpdate, onRender);
+  
+  nowjs.on('connect', function() {
+    clients[this.user.clientId] = {
+      x: 0,
+      y: 0
+    };
+  });
+
+  nowjs.on('disconnect', function() {
+    for(var i in clients) {
+      if(i == this.user.clientId) {
+        delete clients[i];
+        break;
+      }
+    }
+  });
+
+  setTimeout(function() {
+    //everyone.now["OnRender"](JSON.stringify(game.ships),
+    // JSON.stringify(game.bullets));
+    require('./gameloop')(onFrameUpdate, onStepUpdate, onRender);
+  }, 1000);
 }

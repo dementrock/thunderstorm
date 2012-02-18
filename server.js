@@ -75,10 +75,15 @@ app.configure('production', function() {
 /** Load all the routes. */
 require('./routes')(app);
 
-setTimeout(function() {
-  /** Run the game */
-  require('./game/gameMain')(app);
-}, 1000);
+ /** Run the game */
+
+var nowjs = require('now');
+var everyone = nowjs.initialize(app);
+
+everyone.now.requestData = function () {
+  this.now.abc();
+}
+//require('./game/gameMain')(app);
 
 /** Start listenning. */
 app.listen(config.port);

@@ -1,0 +1,34 @@
+var canvas = document.createElement("canvas");
+var ctx = canvas.getContext("2d");
+canvas.width = 800;
+canvas.height = 600;
+document.body.appendChild(canvas);
+
+
+function drawBG() {
+    ctx.fillStyle = '#000'; //black
+    ctx.beginPath();
+    ctx.rect(0, 0, 800, 600); 
+    ctx.closePath();
+    ctx.fill();
+}
+
+
+function drawShip(ship) {
+    ctx.fillStyle = '#FFF'; //white
+    ctx.beginPath();
+    ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+   
+
+}
+
+function drawBullet(bullet) {
+    ctx.fillStyle = '#F00';
+    ctx.beginPath();
+    ctx.arc(bullet.position[0], bullet.position[1], bullet.radius, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+    
+}

@@ -1,4 +1,4 @@
-var common = require('./common');
+var Common = require('./common');
 
 function Ship(position, player) {
     this.speed = 0;
@@ -8,19 +8,31 @@ function Ship(position, player) {
 }
 
 Ship.prototype = {
-    maxSpeed: 10, 
+    maxSpeed: 50, 
     
     hp: 100,
     isAlive: true,
     radius: 10,
+    coolDown: 0,
+    defaultCoolDown: 1,
     newOrientation: undefined,
     //bulletType: normalBullet,
-    gunOrientation: [0, 1],
+
     player: null,
+
+    getCoolDown:
+    function() {
+        return this.coolDown;
+    },
+
+    resetCoolDown:
+    function() {
+        this.coolDown = this.defaultCoolDown;
+    },
 
     setNewOrientation:
     function(newOrientation) {
-        this.newOrientation = newOrientation;
+        this.newOrientation = Common.normalize(newOrientation);
     },
 
     getNewOrientation:
@@ -34,15 +46,16 @@ Ship.prototype = {
         var px = this.position[0], py = this.position[1];
         var ox = this.orientation[0], oy = this.orientation[1];
         this.position = [px + ox * this.speed, py + oy * this.speed];
+        this.coolDown = Math.max(this.coolDown - timeElapsed, 0);
     },
 
     turn: 
     function(timeElapsed) {
-        if (this.newOrientation === undefined || common.isSameOrientation(this.orientation, this.newOrientation)) {
+        if (this.newOrientation === undefined || Common.isSameOrientation(this.orientation, this.newOrientation)) {
             // increase speed
-            this.speed = Math.min(this.speed + timeElapsed, this.maxSpeed);
+            this.speed = Math.min(this.speed + timeElapsed * this.maxSpeed, this.maxSpeed);
         } else {
-            this.orientation = common.normalize(this.newOrientation);
+            this.orientation = Common.normalize(this.newOrientation);
             this.speed = 0;
         }
         this.newOrientation = undefined;
