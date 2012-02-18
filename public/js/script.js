@@ -6,8 +6,12 @@ document.body.appendChild(canvas);
 
 
 $(document).ready(function() {
+  setInterval(function(){
+    now.requestData();
+  },2000);
   $(window).keydown(keyDown);
 });
+
 var keyDown = function(key) {
     if (key == 38 || key == 87) { //up
         now.moveUp({});
@@ -48,23 +52,24 @@ function drawBullet(bullet) {
 
 }
 
-now.OnRender = function(gameState) {
-  var game = JSON.parse(gameState);
-  //game.ships
-  //game.bullets
-
-  drawBG();
-  for(var shipIndex in game.ships) {
-    var ship = this.ships[shipIndex];
-    if(ship.isAlive) {
-      drawShip(ship);
-    }
-  }
-
-  for(var bulletIndex in game.bullets) {
-    var bullet = game.bullets[bulletIndex];
-    if(bullet.isAlive) {
-      drawBullet(bullet);
-    }
-  }
+now.abc = function(gameState) {
+  console.log(gameState);
+  // var game = JSON.parse(gameState);
+  // //game.ships
+  // //game.bullets
+// 
+  // drawBG();
+  // for(var shipIndex in game.ships) {
+    // var ship = this.ships[shipIndex];
+    // if(ship.isAlive) {
+      // drawShip(ship);
+    // }
+  // }
+// 
+  // for(var bulletIndex in game.bullets) {
+    // var bullet = game.bullets[bulletIndex];
+    // if(bullet.isAlive) {
+      // drawBullet(bullet);
+    // }
+  // }
 }
