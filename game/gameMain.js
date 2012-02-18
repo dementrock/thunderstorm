@@ -37,7 +37,7 @@ module.exports = function(app) {
     //console.log(count++, timeElapsed);
     game.update(timeElapsed);
     if(started) {
-      everyone.now.OnRender(compactShips(game.ships), game.bullets);
+	everyone.now.OnRender(compactShips(game.ships), game.bullets, game.explosions);
     }
   };
   var onRender = function() {

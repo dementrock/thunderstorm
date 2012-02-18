@@ -13,9 +13,10 @@ function Game() {
 Game.prototype = {
   update: function(timeElapsed) {
 
-    // explosion
+    // update all explosions
     for(var expoIndex in this.explosions) {
 	var expo = this.explosions[expoIndex];
+	expo.radius--;
       if(expo.radius <= 0) {
 	  this.removeExplosion(expo);
       }
@@ -36,7 +37,6 @@ Game.prototype = {
       bullet.update(timeElapsed);
       if(!bullet.isAlive) {
         this.removeBullet(bullet);
-	this.explosions.push({ radius:5, position: bullet.position });
       }
     }
     // test for intersection between bullets and ships
@@ -52,6 +52,7 @@ Game.prototype = {
             if(this.isIntersect(ship, bullet)) {
               ship.damage(bullet.damageValue);
               isHit = true;
+	      this.explosions.push({ radius:20, position: bullet.position });
             }
           }
         }

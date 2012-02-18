@@ -204,6 +204,7 @@ function drawBullet(bullet) {
 
    
 function drawExplosion(explosion){
+    console.log("drawing explosion");
     ctx.fillStyle = '#FF0000';
     ctx.beginPath();
     ctx.arc(explosion.position[0], explosion.position[1], explosion.radius, 0, Math.PI * 2, true);
@@ -230,8 +231,8 @@ drawText = function(str) {
 var TIMES = 25;
 var TIME = 40;
 
-now.OnRender = function(ships, bullets) {
-    //console.log("rendering");
+now.OnRender = function(ships, bullets, explosions) {
+    //console.log(explosions);
     if (ininterp) {
         clearTimeout(ininterp);
         ininterp = null;
@@ -287,6 +288,14 @@ now.OnRender = function(ships, bullets) {
                 drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
             }
         }
+
+	if( explosions[0] )
+	    drawExplosion(explosions[0]);
+	//Draw explosions
+//         for(var exploIndex in explosions) {
+//             var explo = explosions[exploIndex];
+
+//         }
 
         for(var bulletIndex in bullets) {
             var bullet = bullets[bulletIndex];
