@@ -15,6 +15,7 @@ var new_ships = null;
 var WIDTH = 1280;
 var HEIGHT = 700;
 var COOLDOWN = 400;
+var bg_color = '#09F';
 
 now.ready(function() {
   console.log("ready");
@@ -23,7 +24,7 @@ now.ready(function() {
 var keys = [false, false, false, false, false];
 
 $(document).ready(function() {
-  $("body").css("background-color", "#003");
+  $("body").css("background-color", "#000");
   var canvas = document.createElement("canvas");
   ctx = canvas.getContext("2d");
   canvas.width = WIDTH;
@@ -111,29 +112,40 @@ var clicked = function(e) {
 }
 
 function drawGun(ship) {
-    ctx.strokeStyle = '#F0F';
-    var oldWidth = ctx.lineWidth;
-    ctx.lineWidth = ship.bulletRadius * 2;
-    var x = ship.position[0];
-    var y = ship.position[1];
-    var x2 = window.mouseXPos;
-    var y2 = window.mouseYPos;
+    if (ship.hp > 0) {
+        ctx.strokeStyle = '#F0F';
+        ctx.fillStyle = '#F0F';
+        var oldWidth = ctx.lineWidth;
+        ctx.lineWidth = ship.bulletRadius * 2;
+        var x = ship.position[0];
+        var y = ship.position[1];
+        var x2 = window.mouseXPos;
+        var y2 = window.mouseYPos;
 
 
-    var dx = x2 - x, dy = y2 - y;
-    var norm = Math.sqrt(dx * dx + dy * dy);
-    dx = dx / norm * 2 * ship.radius;
-    dy = dy / norm * 2 * ship.radius;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + dx, y + dy);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.lineWidth = oldWidth;
+        var dx = x2 - x, dy = y2 - y;
+        var norm = Math.sqrt(dx * dx + dy * dy);
+        dx = dx / norm * 2 * ship.radius;
+        dy = dy / norm * 2 * ship.radius;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + dx, y + dy);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x+dx, y+dy, ctx.lineWidth / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.lineWidth = oldWidth;
+    }
 }
 
 function drawBG() {
-  ctx.fillStyle = '#003';
+  ctx.fillStyle = bg_color;
   //black
   ctx.beginPath();
   ctx.rect(0, 0, WIDTH, HEIGHT);
@@ -174,6 +186,17 @@ now.OnConnect = function(id) {
   //alert(id);
 };
 
+
+drawText = function(str) {
+    var x = WIDTH / 2;
+    var y = HEIGHT / 2;
+    ctx.font = "30pt Calibri";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "black";
+    ctx.fillText(str, x, y);
+
+};
+
 var TIMES = 4;
 var TIME = 250;
 
@@ -206,11 +229,16 @@ now.OnRender = function(ships, bullets) {
 		    drawBullet(bullet);
 		}
 	    }
+	    if (my_ship.hp <= 0) {
+		drawText("You are dead! Refresh the page to revenge!");
+	    }
 	}
 	if (count){
 	    setTimeout(function(){ 
 		    interp(count-1); 
 		}, TIME ); //?
+
 	}
     })(TIMES);
 }
+
