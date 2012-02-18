@@ -16,6 +16,8 @@ Game.prototype = {
       var ship = this.ships[shipIndex];
       if(ship.isAlive) {
         ship.update(timeElapsed);
+      } else {
+        this.removeShip(ship);
       }
     }
     // update all bullets
