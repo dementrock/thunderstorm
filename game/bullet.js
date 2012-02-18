@@ -1,4 +1,4 @@
-var Common = require('./Common');
+var Common = require('./common');
 
 function Bullet(position, speed, orientation) {
     this.speed = speed;

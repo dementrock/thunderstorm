@@ -1,4 +1,4 @@
-var Common = require('./Common');
+var Common = require('./common');
 
 function Ship(position, player) {
     this.speed = 0;

@@ -36,8 +36,10 @@ module.exports = function(app) {
         // this.now.OnRender("aa");
       // });
     // }
-    //everyone.now.OnRender(JSON.stringify(game.ships),
+    //console.log(everyone.now);
+    //everyone.now["OnRender"](JSON.stringify(game.ships),
     // JSON.stringify(game.bullets));
+
   };
   var onRender = function() {
 
@@ -60,6 +62,8 @@ module.exports = function(app) {
   });
 
   setTimeout(function() {
+    //everyone.now["OnRender"](JSON.stringify(game.ships),
+    // JSON.stringify(game.bullets));
     require('./gameloop')(onFrameUpdate, onStepUpdate, onRender);
   }, 1000);
 }

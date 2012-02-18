@@ -5,3 +5,7 @@ A boilterplace to speed up expressjs development by provide common utilities.
 * Delete key friendly!!
 * Come preloaded with many common used feature like flashMessages and sending emails.
 * Yeah, for now that's it :P. I may add/subtract things as I work on it.
+
+#
+Documentation
+for 
