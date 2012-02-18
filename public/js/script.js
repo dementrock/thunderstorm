@@ -40,6 +40,29 @@ var keyDown = function(key) {
     }
 }
 
+function drawGun(ship) {
+    console.log('calling gun with ')
+    console.log(ship.id);
+    ctx.fillStyle = '#FFF'; //white
+    var x = ship.position[0];
+    var y = ship.position[1];
+    var x2 = window.mouseXPos;
+    var y2 = window.mouseYPos;
+    //alert(x2 + " " + y2);
+
+    var dx = x2 - x, dy = y2 - y;
+    var norm = Math.sqrt(dx*dx + dy*dy);
+    dx = dx / norm * ship.radius;
+    dy = dy / norm * ship.radius;
+    
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.closePath();
+    ctx.stroke();
+    
+}
+
 function drawBG() {
   ctx.fillStyle = '#777';
   //black
@@ -76,14 +99,20 @@ now.OnConnect = function (id) {
 now.OnRender = function(_ships, _bullets) {
   var ships = JSON.parse(_ships);
   var bullets = JSON.parse(_bullets);
-
+    var my_ship;
   drawBG();
   for(var shipIndex in ships) {
     var ship = ships[shipIndex];
     if(ship.isAlive) {
       drawShip(ship);
     }
+      if (ship.id == shipId) {
+          my_ship = ship;
+          console.log('found my ship!');
+      }
   }
+
+    drawGun(my_ship);
 
   for(var bulletIndex in bullets) {
     var bullet = bullets[bulletIndex];

@@ -51,6 +51,7 @@ module.exports = function(app) {
   nowjs.on('disconnect', function() {
     for(var i in clients) {
       if(i == this.user.clientId) {
+        game.removeShip(clients[i]);
         delete clients[i];
         break;
       }
