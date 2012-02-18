@@ -1,7 +1,7 @@
 var Common = require('./common');
 
 function Bullet(position, speed, orientation) {
-  this.speed = speed;
+  this.speed = 200;
   this.orientation = Common.normalize(orientation);
   this.position = position;
   this.isAlive = true;
@@ -13,9 +13,14 @@ Bullet.rawSpeed = 200;
 
 Bullet.prototype = {
   update: function(timeElapsed) {
-    var px = this.position[0], py = this.position[1];
-    var ox = this.orientation[0], oy = this.orientation[1];
-    this.position = Common.fixPosition([px + ox * this.speed * timeElapsed, py + oy * this.speed * timeElapsed]);
+    if (this.isAlive) {
+        var px = this.position[0], py = this.position[1];
+        var ox = this.orientation[0], oy = this.orientation[1];
+        var newx = px + ox * this.speed * timeElapsed, newy = py + oy * this.speed * timeElapsed;
+        if (newx <= 0 || newx >= WIDTH || newy <= 0 || newy >= HEIGHT) {
+            this.isAlive = false;
+        }
+    }
   },
   // bullet does not turn!
 

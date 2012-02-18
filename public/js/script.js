@@ -24,11 +24,9 @@ $(document).ready(function() {
 });
 
 var clicked = function(e) {
-    console.log('fire! with ');
-    console.log(my_ship);
     var x = e.pageX;
     var y = e.pageY;
-    console.log('to ' + x + ', ' + y);
+    console.log(shipId);
     now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
 }
   
@@ -126,12 +124,13 @@ now.OnRender = function(_ships, _bullets) {
       drawShip(ship);
     }
       if (ship.id == shipId) {
+          console.log(ship.id);
           my_ship = ship;
      //     console.log('found my ship!');
       }
   }
 
-    drawGun(my_ship);
+    drawGun(ship);
 
   for(var bulletIndex in bullets) {
     var bullet = bullets[bulletIndex];
