@@ -3,5 +3,11 @@ $(document).ready(function(){
 });
 
 var keyDown = function(key) {
-  now.moveUp();
+  now.moveUp({});
+}
+
+now.OnRender = function (gameState) {
+  var game = JSON.parse(gameState);
+  //game.ships
+  //game.bullets
 }
