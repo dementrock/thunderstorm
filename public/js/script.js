@@ -138,6 +138,7 @@ function drawShip(ship, isSelf) {
   ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
   ctx.closePath();
   ctx.fill();
+  ctx.fillRect(ship.position[0] - ship.radius, ship.position[1] - ship.radius * 2, 2.0 * ship.radius * ship.hp / 100, 5);
 }
 
 function drawBullet(bullet) {
