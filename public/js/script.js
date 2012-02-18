@@ -22,6 +22,9 @@ now.ready(function() {
 var keys = [false, false, false, false, false];
 
 $(document).ready(function() {
+  window.mouseXPos = 1;
+  window.mouseYPos = 1;
+  
   $("body").css("background-color", "#3366ff");
   var canvas = document.createElement("canvas");
   ctx = canvas.getContext("2d");
@@ -299,9 +302,10 @@ now.OnRender = function(ships, bullets, explosions, powerups) {
         if (ship.id == shipId) {
             continue;
         }
-        if (ship.fireOrientation != null ) {
-            drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
+        if (ship.fireOrientation == null) {
+          ship.fireOrientation = [1, 1];
         }
+        drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
     }
 
 
