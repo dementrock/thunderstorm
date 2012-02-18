@@ -1,4 +1,4 @@
-var Common = require('./Common');
+var Common = require('./common');
 var Ship = require('./ship');
 var Bullet = require('./bullet');
 
