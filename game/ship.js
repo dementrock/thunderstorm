@@ -38,7 +38,10 @@ Ship.prototype = {
     this.coolDown = Math.max(this.coolDown - timeElapsed, 0);
   },
   turn: function(timeElapsed) {
-    if(this.newOrientation === undefined || Common.isSameOrientation(this.orientation, this.newOrientation)) {
+    if(this.newOrientation === undefined) {
+      // decrease speed
+      this.speed = Math.max(this.speed - 0.1 * timeElapsed * this.maxSpeed, 0);
+    } else if (Common.isSameOrientation(this.orientation, this.newOrientation)) {
       // increase speed
       this.speed = Math.min(this.speed + timeElapsed * this.maxSpeed, this.maxSpeed);
     } else {

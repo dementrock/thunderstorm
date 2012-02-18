@@ -69,8 +69,8 @@ Game.prototype = {
               dya /= norma; dya *= ra;
               dxb /= normb; dxb *= rb;
               dyb /= normb; dyb *= rb;
-              ship_a.setPosision([xa + dxa, ya + dya]);
-              ship_b.setPosision([xb + dxb, yb + dyb]);
+              ship_a.setPosition([xa + dxa, ya + dya]);
+              ship_b.setPosition([xb + dxb, yb + dyb]);
             }
           }
         }
