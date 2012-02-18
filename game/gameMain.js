@@ -43,9 +43,9 @@ module.exports = function(app) {
       game.fire(clients[id], orientation);
       clients[id].fireOrientation = orientation;
   }
-//   everyone.now.nameIs = function(id, name){
-//       clients[id].name = name;
-//   }
+   everyone.now.nameIs = function(id, name){
+       clients[id].name = name;
+  }
   everyone.now.sendChat = function(msg) {
     everyone.now.receiveChat(msg);
   }
@@ -72,7 +72,7 @@ module.exports = function(app) {
               damaged = ships[i].damagedTurns % 2;
           }
           locs.push({
-		  //name : clients[ships[i].id].name,
+	      name : clients[ships[i].id].name,
               position        : ships[i].position,
               radius          : ships[i].radius,
               id              : ships[i].id,
