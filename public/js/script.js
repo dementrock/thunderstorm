@@ -238,6 +238,10 @@ function drawShip(ship, isSelf) {
       ctx.fillStyle = '#990000';
   }
     
+  // ctx.font = "20pt Calibri";
+//   ctx.width = 40;
+//   ctx.fillText(ship.name || "Unknown", ship.position[0] - ship.radius/, ship.position[1] + ship.radius*2.5 );
+
   ctx.beginPath();
   ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
   ctx.closePath();
@@ -272,7 +276,7 @@ function drawExplosion(explosion){
 
 now.OnConnect = function(id) {
     shipId = id;
-    
+    now.nameIs(id, prompt("Who are you?"));
 };
 
 
