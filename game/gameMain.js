@@ -44,7 +44,7 @@ module.exports = function(app) {
   };
   var onStepUpdate = function(timeElapsed) {
     if(started) {
-      everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
+        everyone.now.OnRender(JSON.stringify(game.ships), JSON.stringify(game.bullets));
     }
   };
 
@@ -54,14 +54,9 @@ module.exports = function(app) {
   nowjs.on('connect', function() {
     started = true;
       
-    clients[this.user.clientId] = {
-      //x: 0,
-      //y: 0
-
-        var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
-        game.addShip(ship);
-    
-    };
+      var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
+      game.addShip(ship);
+      clients[this.user.clientId] = ship;
   });
 
   nowjs.on('disconnect', function() {
