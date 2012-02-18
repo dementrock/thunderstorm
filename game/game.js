@@ -1,8 +1,8 @@
 var Common = require('./common');
 var Ship = require('./ship');
 var Bullet = require('./bullet');
-WIDTH = 800;
-HEIGHT = 600;
+WIDTH = 1280;
+HEIGHT = 960;
 
 function Game() {
   this.ships = new Array();
