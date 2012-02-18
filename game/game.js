@@ -50,8 +50,11 @@ Game.prototype = {
     for(var shipIndex in this.ships) {
       var ship_a = this.ships[shipIndex];
       if (ship_a.isAlive) {
-        for(var shipIndex in this.ships) {
-          var ship_b = this.ships[shipIndex];
+        for(var _shipIndex in this.ships) {
+          if (_shipIndex == shipIndex) {
+            continue;
+          }
+          var ship_b = this.ships[_shipIndex];
           if (ship_b.isAlive) {
             if (this.isIntersect(ship_a, ship_b)) {
               // fix their positions
