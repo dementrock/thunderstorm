@@ -2,9 +2,6 @@ var ctx;
 var my_ship;
 var shipId;
 var last_fired;
-var WIDTH = 1440;
-var HEIGHT = 960;
-var COOLDOWN = 1000;
 
 var image = new Image();
 //image.src = "https://d3qcduphvv2yxi.cloudfront.net/assets/562827/view_large/da56bf7994f519028539ddf52ddbacf9.jpg?1277067092";
@@ -13,6 +10,9 @@ var image = new Image();
     //context.fillRect(0, 0, WIDTH, HEIGHT);
 //}
 
+var WIDTH = 1280;
+var HEIGHT = 700;
+var COOLDOWN = 400;
 
 now.ready(function() {
   console.log("ready");
@@ -148,7 +148,9 @@ function drawShip(ship, isSelf) {
   ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
   ctx.closePath();
   ctx.fill();
-  ctx.fillRect(ship.position[0] - ship.radius, ship.position[1] - ship.radius * 2, 2.0 * ship.radius * ship.hp / 100, 5);
+  for (var start_y = ship.position[1] - ship.radius * 2, restHp = ship.hp, nowHp = Math.min(100, restHp); restHp > 0; start_y += 10, restHp -= 100, nowHp = Math.min(100, restHp)) { 
+    ctx.fillRect(ship.position[0] - ship.radius, start_y, 2.0 * ship.radius * nowHp / 100, 5);
+  }
 }
 
 function drawBullet(bullet) {
