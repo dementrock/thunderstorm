@@ -2,6 +2,10 @@ var ctx;
 var my_ship;
 var shipId;
 var last_fired;
+var WIDTH = 1440;
+var HEIGHT = 960;
+var COOLDOWN = 1000;
+
 
 now.ready(function() {
   console.log("ready");
@@ -13,8 +17,8 @@ $(document).ready(function() {
   $("body").css("background-color", "#003");
   var canvas = document.createElement("canvas");
   ctx = canvas.getContext("2d");
-  canvas.width = 800;
-  canvas.height = 600;
+  canvas.width = WIDTH;
+  canvas.height = HEIGHT;
   document.body.appendChild(canvas);
 
 
@@ -81,7 +85,8 @@ $(document).ready(function() {
 
 var clicked = function(e) {
     time = new Date().getTime();
-    if (!last_fired || time - last_fired >= 1000) {
+    if (!last_fired || time - last_fired >= COOLDOWN) {
+        console.log('fire');
         last_fired = time;
         // console.log('fire! with ');
         // console.log(my_ship);
@@ -118,7 +123,7 @@ function drawBG() {
   ctx.fillStyle = '#003';
   //black
   ctx.beginPath();
-  ctx.rect(0, 0, 800, 600);
+  ctx.rect(0, 0, WIDTH, HEIGHT);
   ctx.closePath();
   ctx.fill();
 }
