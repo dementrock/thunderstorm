@@ -9,10 +9,21 @@ function Game() {
   this.ships = new Array();
   this.bullets = new Array();
   this.powerups = new Array();
+  this.explosions = new Array();
 }
 
 Game.prototype = {
   update: function(timeElapsed) {
+
+    // explosion
+    for(var expoIndex in this.explosions) {
+	    var expo = this.explosions[expoIndex];
+        expo.radius--;
+      if(expo.radius <= 0) {
+	  this.removeExplosion(expo);
+      }
+    }
+
     // update all ships
     for(var shipIndex in this.ships) {
       var ship = this.ships[shipIndex];
@@ -28,6 +39,7 @@ Game.prototype = {
       bullet.update(timeElapsed);
       if(!bullet.isAlive) {
         this.removeBullet(bullet);
+	this.explosions.push({ radius:5, position: bullet.position });
       }
     }
     // test for intersection between bullets and ships
@@ -47,6 +59,7 @@ Game.prototype = {
                 this.addPowerup(new Powerup(ship.position));
                 console.log(this.powerups);
               }
+              this.explosions.push({ radius:20, position: bullet.position });
               isHit = true;
             }
           }
@@ -128,6 +141,11 @@ Game.prototype = {
     if(idx != -1)
       this.ships.splice(idx, 1);
   },
+  removeExplosion: function(expo){
+    var idx = this.explosions.indexOf(expo);
+    if(idx != -1)
+      this.explosions.splice(idx, 1);
+    },
   removeBullet: function(bullet) {
     var idx = this.bullets.indexOf(bullet);
     if(idx != -1)

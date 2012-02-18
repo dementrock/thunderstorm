@@ -82,6 +82,7 @@ $(document).ready(function() {
   },100);
   
   $(document).click(clicked);
+
   $(document).mousemove(function(e) {
     if(WIDTH > window.innerWidth) {
       window.mouseXPos = e.pageX;
@@ -104,23 +105,31 @@ var clicked = function(e) {
         now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
 }
 
-function drawGun(ship) {
-    if (ship.hp > 0) {
-        ctx.strokeStyle = '#F0F';
-        ctx.fillStyle = '#F0F';
-        var oldWidth = ctx.lineWidth;
-        ctx.lineWidth = Math.min(ship.bulletRadius * 2, 10);
-        var x = ship.position[0];
-        var y = ship.position[1];
-        var x2 = window.mouseXPos;
-        var y2 = window.mouseYPos;
+function drawMyGun() {
+    var ship = my_ship;
+    //console.log('drawing my gun ' + ship);
+    ctx.strokeStyle = '#F0F';
+    var oldWidth = ctx.lineWidth;
+    ctx.lineWidth = ship.bulletRadius * 2;
+    var x = ship.position[0];
+    var y = ship.position[1];
+    var x2 = window.mouseXPos;
+    var y2 = window.mouseYPos;
+//    console.log(x + " " + y + " " + x2 + " " + y2);
+
+    var dx = x2 - x, dy = y2 - y;
+    var norm = Math.sqrt(dx * dx + dy * dy);
+    dx = dx / norm * 2 * ship.radius;
+    dy = dy / norm * 2 * ship.radius;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.lineWidth = oldWidth;
 
 
-        var dx = x2 - x, dy = y2 - y;
-        var norm = Math.sqrt(dx * dx + dy * dy);
-        dx = dx / norm * 2 * ship.radius;
-        dy = dy / norm * 2 * ship.radius;
-        ctx.beginPath();
+/*        ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x + dx, y + dy);
         ctx.closePath();
@@ -134,7 +143,27 @@ function drawGun(ship) {
         ctx.closePath();
         ctx.fill();
         ctx.lineWidth = oldWidth;
-    }
+    */
+}
+function drawGun(x, y, vector, size, width) {
+    ctx.strokeStyle = '#F0F';
+    var oldWidth = ctx.lineWidth;
+    ctx.lineWidth = width;
+   // var x = ship.position[0];
+    //var y = ship.position[1];
+    //var x2 = window.mouseXPos;
+    //var y2 = window.mouseYPos;
+
+    var dx = vector[0], dy = vector[1];//x2 - x, dy = y2 - y;
+    var norm = Math.sqrt(dx * dx + dy * dy);
+    dx = dx / norm * size;
+    dy = dy / norm * size;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.lineWidth = oldWidth;
 }
 
 function drawBG() {
@@ -146,6 +175,14 @@ function drawBG() {
   ctx.fill();
 }
 
+function drawPowerup(powerup) {
+    ctx.fillStyle = '#FC0';
+    ctx.beginPath();
+    console.log(powerup.position);
+    ctx.arc(powerup.position[0], powerup.position[1], powerup.radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fill();
+}
 function drawShip(ship, isSelf) {
   if (ship.blink) {
       ctx.fillStyle = "#999";
@@ -173,11 +210,12 @@ function drawBullet(bullet) {
 
 }
 
-function drawPowerup(powerup) {
-    ctx.fillStyle = '#FC0';
+   
+function drawExplosion(explosion){
+    ctx.fillStyle = '#FF0000';
     ctx.beginPath();
-    console.log(powerup.position);
-    ctx.arc(powerup.position[0], powerup.position[1], powerup.radius, 0, Math.PI * 2, true);
+    ctx.arc(explosion.position[0], explosion.position[1], explosion.radius, 0, Math.PI * 2, true);
+    explosion.radius--;
     ctx.closePath();
     ctx.fill();
 }
@@ -200,7 +238,7 @@ drawText = function(str) {
 var TIMES = 25;
 var TIME = 40;
 
-now.OnRender = function(ships, bullets, powerups) {
+now.OnRender = function(ships, bullets, explosions, powerups) {
     //console.log("rendering");
     if (ininterp) {
         clearTimeout(ininterp);
@@ -223,16 +261,17 @@ now.OnRender = function(ships, bullets, powerups) {
         var found = false;
         for(var shipIndex in new_ships){
             var ship = new_ships[shipIndex];
-            // var old_ship = old_ships[shipIndex];
-            // var pos = ship.position, old_pos = old_ship.position;
-            // var direction = [pos[0] - old_pos[0], pos[1] - old_pos[1]];
-            // var newx = ship.position[0] + 1.0 * direction[0]/TIMES,
-                // newy = ship.position[1] + 1.0 * direction[1]/TIMES;
-            // newx = Math.max(ship.radius, newx);
-            // newx = Math.min(WIDTH - ship.radius, newx);
-            // newy = Math.max(ship.radius, newy);
-            // newy = Math.min(HEIGHT- ship.radius, newy);
-            // ship.position = [newx, newy];
+            /*
+            var old_ship = old_ships[shipIndex];
+            var pos = ship.position, old_pos = old_ship.position;
+            var direction = [pos[0] - old_pos[0], pos[1] - old_pos[1]];
+            var newx = ship.position[0] + 1.0 * direction[0]/TIMES,
+            newy = ship.position[1] + 1.0 * direction[1]/TIMES;
+            newx = Math.max(ship.radius, newx);
+            newx = Math.min(WIDTH - ship.radius, newx);
+            newy = Math.max(ship.radius, newy);
+            newy = Math.min(HEIGHT- ship.radius, newy);
+            ship.position = [newx, newy];*/
             drawShip(ship, ship.id == shipId);
             if(ship.id == shipId) {
                 my_ship = ship;
@@ -243,7 +282,24 @@ now.OnRender = function(ships, bullets, powerups) {
             drawText("You are dead! Refresh the page to revenge!");
             return;
         }
-        drawGun(my_ship);
+
+        drawMyGun();
+        for (var shipIndex in ships) {
+            var ship = ships[shipIndex];
+            if (ship.id == shipId) {
+                //console.log('myself!');
+                continue;
+            }
+            //console.log(ship.fireOrientation);
+            if (ship.fireOrientation != null ) {
+                drawGun(ship.position[0], ship.position[1], ship.fireOrientation, ship.radius * 2, ship.bulletRadius * 2);
+            }
+        }
+
+
+        for(var exploIndex in explosions) {
+             drawExplosion(explosions[exploIndex]);
+        }
         for(var bulletIndex in bullets) {
             var bullet = bullets[bulletIndex];
             if(bullet.isAlive) {

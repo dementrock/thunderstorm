@@ -2,51 +2,51 @@ var Common = require('./common');
 
 typeList = [
     {
-        maxSpeed        : 150,
+        maxSpeed        : 160,
         hp              : 100,
         radius          : 10,
-        defaultCoolDown : 0.2,
+        defaultCoolDown : 0.3,
         bulletRadius    : 3,
         damagedTurns    : 0,
     },
     {
-        maxSpeed        : 130,
+        maxSpeed        : 150,
         hp              : 140,
-        radius          : 15,
-        defaultCoolDown : 0.3,
+        radius          : 12,
+        defaultCoolDown : 0.4,
         bulletRadius    : 4,
         damagedTurns    : 0,
     },
     {
-        maxSpeed        : 110,
+        maxSpeed        : 140,
         hp              : 180,
-        radius          : 20,
-        defaultCoolDown : 0.35,
+        radius          : 14,
+        defaultCoolDown : 0.5,
         bulletRadius    : 5,
         damagedTurns    : 0,
     },
     {
-        maxSpeed        : 90,
+        maxSpeed        : 130,
         hp              : 220,
-        radius          : 25,
-        defaultCoolDown : 0.4,
+        radius          : 16,
+        defaultCoolDown : 0.6,
         bulletRadius    : 6,
         damagedTurns    : 0,
     },
     {
-        maxSpeed        : 70,
+        maxSpeed        : 120,
         hp              : 260,
-        radius          : 30,
-        defaultCoolDown : 0.45,
+        radius          : 18,
+        defaultCoolDown : 0.7,
         bulletRadius    : 7,
         damagedTurns    : 0,
     },
     {
-        maxSpeed        : 50,
+        maxSpeed        : 110,
         hp              : 300,
-        radius          : 35,
-        defaultCoolDown : 0.5,
-        bulletRadius    : 9,
+        radius          : 20,
+        defaultCoolDown : 0.8,
+        bulletRadius    : 8,
         damagedTurns    : 0,
     },
 ]
@@ -61,6 +61,7 @@ function Ship(position, player, id) {
     this.isAlive = true;
     this.coolDown = 0;
     this.id = id;
+    this.fireOrientation = null;
 
     var type = typeList[Math.floor ( Math.random() * typeList.length )];
 
@@ -95,7 +96,7 @@ Ship.prototype = {
     var newx = px + ox * this.speed * timeElapsed, newy = py + oy * this.speed * timeElapsed;
     newx = Math.max(newx, this.radius);
     newx = Math.min(newx, WIDTH - this.radius);
-    newy = Math.max(newy, this.radius);
+    newy = Math.max(newy, this.radius + 50);
     newy = Math.min(newy, HEIGHT - this.radius);
     this.position = [newx, newy];
     this.coolDown = Math.max(this.coolDown - timeElapsed, 0);
