@@ -173,6 +173,16 @@ function drawBullet(bullet) {
 
 }
 
+   
+function drawExplosion(explosion){
+    ctx.fillStyle = '#FF0000';
+    ctx.beginPath();
+    ctx.arc(explosion.position[0], explosion.position[1], explosion.radius, 0, Math.PI * 2, true);
+    explosion.radius--;
+    ctx.closePath();
+    ctx.fill();
+}
+
 now.OnConnect = function(id) {
   shipId = id;
 };
