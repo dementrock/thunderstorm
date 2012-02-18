@@ -107,26 +107,25 @@ var clicked = function(e) {
 }
 
 function drawGun(ship) {
-  ctx.strokeStyle = '#F0F';
-  var oldWidth = ctx.lineWidth;
-  ctx.lineWidth = 4;
-  var x = ship.position[0];
-  var y = ship.position[1];
-  var x2 = window.mouseXPos;
-  var y2 = window.mouseYPos;
+    ctx.strokeStyle = '#F0F';
+    var oldWidth = ctx.lineWidth;
+    ctx.lineWidth = 4;
+    var x = ship.position[0];
+    var y = ship.position[1];
+    var x2 = window.mouseXPos;
+    var y2 = window.mouseYPos;
 
 
-  var dx = x2 - x, dy = y2 - y;
-  var norm = Math.sqrt(dx * dx + dy * dy);
-  dx = dx / norm * 2 * ship.radius;
-  dy = dy / norm * 2 * ship.radius;
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.lineTo(x + dx, y + dy);
-  ctx.closePath();
-  ctx.stroke();
-  ctx.lineWidth = oldWidth;
-
+    var dx = x2 - x, dy = y2 - y;
+    var norm = Math.sqrt(dx * dx + dy * dy);
+    dx = dx / norm * 2 * ship.radius;
+    dy = dy / norm * 2 * ship.radius;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.lineWidth = oldWidth;
 }
 
 function drawBG() {
@@ -169,6 +168,7 @@ now.OnConnect = function(id) {
 }
 
 now.OnRender = function(_ships, _bullets) {
+    var found = false;
   var ships = JSON.parse(_ships);
   var bullets = JSON.parse(_bullets);
   drawBG();
@@ -177,9 +177,12 @@ now.OnRender = function(_ships, _bullets) {
     drawShip(ship, ship.id == shipId);
     if(ship.id == shipId) {
       my_ship = ship;
+        found = true;
     }
   }
-
+    if (!found) {
+        return;
+    }
   drawGun(my_ship);
 
   for(var bulletIndex in bullets) {
