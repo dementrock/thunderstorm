@@ -14,7 +14,7 @@ var ininterp = null;
 var isDead = false;
 
 now.ready(function() {
-  console.log("ready");
+  //console.log("ready");
 })
 
 var keys = [false, false, false, false, false];
@@ -83,28 +83,25 @@ $(document).ready(function() {
   
   $(document).click(clicked);
   $(document).mousemove(function(e) {
-    window.mouseXPos = e.pageX;
+    if(WIDTH > window.innerWidth) {
+      window.mouseXPos = e.pageX;
+    } else {
+      window.mouseXPos = e.pageX - (window.innerWidth - WIDTH) / 2;
+    }
     window.mouseYPos = e.pageY;
+
 
   });
 });
 
 var clicked = function(e) {
-/*
-    time = new Date().getTime();
-    if (!last_fired || time - last_fired >= COOLDOWN) {
-        console.log('fire');
-        last_fired = time;
-        // console.log('fire! with ');
-        // console.log(my_ship);
-*/
-        var x = e.pageX;
+        if (WIDTH > window.innerWidth) {
+          var x = e.pageX;
+        } else {
+          var x = e.pageX - (window.innerWidth - WIDTH) / 2;
+        }
         var y = e.pageY;
-        //  console.log('to ' + x + ', ' + y);
-        //console.log('fire');
-        
         now.fire(shipId, [x - my_ship.position[0], y - my_ship.position[1]]);
- //   }    
 }
 
 function drawGun(ship) {
@@ -158,7 +155,6 @@ function drawShip(ship, isSelf) {
       ctx.fillStyle = '#F00';
   }
     
-  console.log(ship.position[0], ship.position[1]);
   ctx.beginPath();
   ctx.arc(ship.position[0], ship.position[1], ship.radius, 0, Math.PI * 2, true);
   ctx.closePath();
@@ -178,9 +174,7 @@ function drawBullet(bullet) {
 }
 
 now.OnConnect = function(id) {
-  //my_ship = JSON.parse(_ship);
   shipId = id;
-  //alert(id);
 };
 
 
@@ -198,7 +192,7 @@ var TIMES = 25;
 var TIME = 40;
 
 now.OnRender = function(ships, bullets) {
-    console.log("rendering");
+    //console.log("rendering");
     if (ininterp) {
         clearTimeout(ininterp);
         ininterp = null;
@@ -220,16 +214,16 @@ now.OnRender = function(ships, bullets) {
         var found = false;
         for(var shipIndex in new_ships){
             var ship = new_ships[shipIndex];
-            var old_ship = old_ships[shipIndex];
-            var pos = ship.position, old_pos = old_ship.position;
-            var direction = [pos[0] - old_pos[0], pos[1] - old_pos[1]];
-            var newx = ship.position[0] + 1.0 * direction[0]/TIMES,
-                newy = ship.position[1] + 1.0 * direction[1]/TIMES;
-            newx = Math.max(ship.radius, newx);
-            newx = Math.min(WIDTH - ship.radius, newx);
-            newy = Math.max(ship.radius, newy);
-            newy = Math.min(HEIGHT- ship.radius, newy);
-            ship.position = [newx, newy];
+            // var old_ship = old_ships[shipIndex];
+            // var pos = ship.position, old_pos = old_ship.position;
+            // var direction = [pos[0] - old_pos[0], pos[1] - old_pos[1]];
+            // var newx = ship.position[0] + 1.0 * direction[0]/TIMES,
+                // newy = ship.position[1] + 1.0 * direction[1]/TIMES;
+            // newx = Math.max(ship.radius, newx);
+            // newx = Math.min(WIDTH - ship.radius, newx);
+            // newy = Math.max(ship.radius, newy);
+            // newy = Math.min(HEIGHT- ship.radius, newy);
+            // ship.position = [newx, newy];
             drawShip(ship, ship.id == shipId);
             if(ship.id == shipId) {
                 my_ship = ship;
@@ -250,7 +244,6 @@ now.OnRender = function(ships, bullets) {
         if (my_ship.hp <= 0) {
             isDead = true;
         }
-        console.log('here');
         if (count > 0){
             ininterp = function(){ 
                 if (interp) {
