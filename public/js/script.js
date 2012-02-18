@@ -118,7 +118,7 @@ function drawGun(ship) {
         ctx.strokeStyle = '#F0F';
         ctx.fillStyle = '#F0F';
         var oldWidth = ctx.lineWidth;
-        ctx.lineWidth = ship.bulletRadius * 2;
+        ctx.lineWidth = Math.min(ship.bulletRadius * 2, 10);
         var x = ship.position[0];
         var y = ship.position[1];
         var x2 = window.mouseXPos;
