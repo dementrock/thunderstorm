@@ -3,6 +3,7 @@ var my_ship;
 var shipId;
 
 now.ready(function() {
+  console.log("ready");
 })
 
 $(document).ready(function() {

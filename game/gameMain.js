@@ -8,10 +8,8 @@ var started = false;
 module.exports = function(app) {
   var game = new Game();
 
-
   var everyone = nowjs.initialize(app);
   var clients = [];
-  
 
   everyone.now.moveUp = function(id) {
     console.log('move up');
@@ -23,12 +21,10 @@ module.exports = function(app) {
   };
   everyone.now.moveLeft = function(id) {
     console.log('move left');
-
     clients[id].setNewOrientation([-1, 0]);
   };
   everyone.now.moveRight = function(id) {
     console.log('move right');
-
     clients[id].setNewOrientation([1, 0]);
   };
   everyone.now.fire = function(id, orientation) {
@@ -48,11 +44,12 @@ module.exports = function(app) {
   };
 
   nowjs.on('connect', function() {
-      started = true;
-      var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
-      game.addShip(ship);
-      clients[this.user.clientId] = ship;
-      this.now.OnConnect(this.user.clientId);//JSON.stringify(ship));//this.user.clientId);
+    started = true;
+    var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
+    game.addShip(ship);
+    clients[this.user.clientId] = ship;
+    this.now.OnConnect(this.user.clientId);
+    //JSON.stringify(ship));//this.user.clientId);
   });
 
   nowjs.on('disconnect', function() {
