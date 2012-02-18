@@ -24,7 +24,7 @@ var keyDown = function(key) {
   }
 }
 function drawBG() {
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = '#777';
   //black
   ctx.beginPath();
   ctx.rect(0, 0, 800, 600);
