@@ -66,20 +66,34 @@ $(document).ready(function() {
   })
   
   setInterval(function() {
-    if (keys[0]) {
-      now.moveUp(shipId);
-    }
-    if (keys[1]) {
-      now.moveDown(shipId);
-    }
-    if (keys[2]) {
-      now.moveLeft(shipId);
-    }
-    if (keys[3]) {
-      now.moveRight(shipId);
-    }
     if (keys[4]) {
       now.fire(shipId, [window.mouseXPos - my_ship.position[0], window.mouseYPos - my_ship.position[1]]);
+    }
+
+    if (keys[0] && keys[2] ) {
+      now.moveUpLeft(shipId);
+    }
+    else if (keys[0] && keys[3] ) {
+      now.moveUpRight(shipId);
+    }
+    else if (keys[1] && keys[2] ) {
+      now.moveDownLeft(shipId);
+    }
+    else if (keys[1] && keys[3] ) {
+      now.moveDownRight(shipId);
+    }
+
+    else if (keys[0]) {
+      now.moveUp(shipId);
+    }
+    else if (keys[1]) {
+      now.moveDown(shipId);
+    }
+    else if (keys[2]) {
+      now.moveLeft(shipId);
+    }
+    else if (keys[3]) {
+      now.moveRight(shipId);
     }
   },100);
   
@@ -248,7 +262,8 @@ function drawExplosion(explosion){
 }
 
 now.OnConnect = function(id) {
-  shipId = id;
+    shipId = id;
+    
 };
 
 
