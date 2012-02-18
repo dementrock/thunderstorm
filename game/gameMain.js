@@ -1,7 +1,7 @@
 var Ship = require('./ship');
 var Bullet = require('./bullet');
 var Game = require('./game');
-var Common = require('./Common');
+var Common = require('./common');
 var nowjs = require('now');
 var started = false;
 
@@ -34,7 +34,6 @@ module.exports = function(app) {
       everyone.now.OnRender(JSON.stringify(game.ships));
   };
   var onRender = function() {
-
   };
   
   nowjs.on('connect', function() {
