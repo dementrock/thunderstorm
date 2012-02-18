@@ -104,7 +104,7 @@ Ship.prototype = {
   turn: function(timeElapsed) {
     if(this.newOrientation === undefined) {
       // decrease speed
-      this.speed = Math.max(this.speed - 0.1 * timeElapsed * this.maxSpeed, 0);
+      this.speed = Math.max(this.speed - 0.5 * timeElapsed * this.maxSpeed, 0);
     } else if (Common.isSameOrientation(this.orientation, this.newOrientation)) {
       // increase speed
       this.speed = Math.min(this.speed + 100 * timeElapsed * this.maxSpeed, this.maxSpeed);
