@@ -13,6 +13,7 @@ var image = new Image();
 var WIDTH = 1280;
 var HEIGHT = 700;
 var COOLDOWN = 400;
+var bg_color = '#09F';
 
 now.ready(function() {
   console.log("ready");
@@ -21,7 +22,7 @@ now.ready(function() {
 var keys = [false, false, false, false, false];
 
 $(document).ready(function() {
-  $("body").css("background-color", "#003");
+  $("body").css("background-color", "#000");
   var canvas = document.createElement("canvas");
   ctx = canvas.getContext("2d");
   canvas.width = WIDTH;
@@ -130,7 +131,7 @@ function drawGun(ship) {
 }
 
 function drawBG() {
-  ctx.fillStyle = '#003';
+  ctx.fillStyle = bg_color;
   //black
   ctx.beginPath();
   ctx.rect(0, 0, WIDTH, HEIGHT);
@@ -189,3 +190,4 @@ now.OnRender = function(_ships, _bullets) {
     }
   }
 }
+
