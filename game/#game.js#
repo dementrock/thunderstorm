@@ -1,4 +1,4 @@
-var Common = require('./common');
+setPosisionvar Common = require('./common');
 var Ship = require('./ship');
 var Bullet = require('./bullet');
 
@@ -69,8 +69,8 @@ Game.prototype = {
               dya /= norma; dya *= ra;
               dxb /= normb; dxb *= rb;
               dyb /= normb; dyb *= rb;
-              ship_a.setPosition([xa + dxa, ya + dya]);
-              ship_b.setPosition([xb + dxb, yb + dyb]);
+              ship_a.setPosision([xa + dxa, ya + dya]);
+              ship_b.setPosision([xb + dxb, yb + dyb]);
             }
           }
         }
@@ -86,16 +86,6 @@ Game.prototype = {
   },
   addBullet: function(newBullet) {
     this.bullets.push(newBullet);
-  },
-  removeShip: function(ship) {
-    console.log(this.ships.length);
-    var idx = this.ships.indexOf(ship);
-    if(idx != -1) this.ships.splice(idx, 1);
-    console.log(this.ships.length);
-  },
-  removeBullet: function(bullet) {
-    var idx = this.bullets.indexOf(bullet);
-    if(idx != -1) this.bullets.splice(idx, 1);
   },
   fire: function(ship, gunOrientation) {
     if(Common.isEqual(ship.getCoolDown(), 0)) {
