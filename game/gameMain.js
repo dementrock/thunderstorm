@@ -41,11 +41,10 @@ module.exports = function(app) {
 
   nowjs.on('connect', function() {
     started = true;
-    var ship = new Ship([800 * Math.random(), 600 * Math.random()], this.user.clientId);
+    var ship = new Ship([WIDTH * Math.random(), HEIGHT * Math.random()], this.user.clientId);
     game.addShip(ship);
     clients[this.user.clientId] = ship;
     this.now.OnConnect(this.user.clientId);
-    //JSON.stringify(ship));//this.user.clientId);
   });
 
   nowjs.on('disconnect', function() {
