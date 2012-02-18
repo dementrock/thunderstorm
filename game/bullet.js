@@ -5,6 +5,7 @@ function Bullet(position, speed, orientation) {
   this.orientation = Common.normalize(orientation);
   this.position = position;
   this.isAlive = true;
+  this.lifeTime = 2;
   this.radius = 3;
   this.damageValue = 10;
 }
@@ -13,6 +14,10 @@ Bullet.rawSpeed = 500;
 
 Bullet.prototype = {
   update: function(timeElapsed) {
+    this.lifeTime -= timeElapsed;
+    if (this.lifeTime < 0) {
+      this.isAlive = false;
+    }    
     var px = this.position[0], py = this.position[1];
     var ox = this.orientation[0], oy = this.orientation[1];
     this.position = Common.fixPosition([px + ox * Bullet.rawSpeed * timeElapsed,

@@ -22,8 +22,9 @@ Game.prototype = {
     // update all bullets
     for(var bulletIndex in this.bullets) {
       var bullet = this.bullets[bulletIndex];
-      if(bullet.isAlive) {
-        bullet.update(timeElapsed);
+      bullet.update(timeElapsed);
+      if(!bullet.isAlive) {
+        this.removeBullet(bullet);
       }
     }
     // test for intersection between bullets and ships
