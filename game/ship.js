@@ -1,6 +1,7 @@
 var Common = require('./common');
 
 function Ship(position, player, id) {
+    rand = Math.random();
   this.speed = 0;
   this.orientation = [0, 0];
   this.position = position;
@@ -13,6 +14,12 @@ function Ship(position, player, id) {
   this.coolDown = 0;
   this.defaultCoolDown = 0.4;
   this.id = id;
+
+    if (rand < 0.5) {
+        this.hp = 300;
+        this.radius = 40;
+        
+    }
 }
 
 Ship.prototype = {
