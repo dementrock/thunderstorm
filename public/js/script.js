@@ -276,7 +276,7 @@ function drawExplosion(explosion){
 
 now.OnConnect = function(id) {
     shipId = id;
-    now.nameIs(id, prompt("Who are you?"));
+    //now.nameIs(id, prompt("Who are you?"));
 };
 
 
